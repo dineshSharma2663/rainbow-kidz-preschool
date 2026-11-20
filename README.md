@@ -23,7 +23,10 @@ npm run dev
 
 ## Deploying
 
-Every push to `main` builds and deploys through `.github/workflows/deploy.yml`.
+Right now: run `npm run deploy`. It builds the site and publishes `dist/` to the `gh-pages` branch.
+
+Automatic deploys on every push are ready in `.github/workflows/deploy.yml` (kept locally). To turn them on:
+run `gh auth refresh -s workflow`, commit the workflow file, and switch **Settings → Pages → Source** to **GitHub Actions**.
 
 ### Moving to a custom domain (for example with Cloudflare)
 
