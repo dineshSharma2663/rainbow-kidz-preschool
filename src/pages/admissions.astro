@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import { school, tone, telHref, primaryBranch } from '../lib/data';
+
+const steps = [
+  { t: 'red', title: 'Call or message us', text: 'Tell us your child’s age and which branch suits you. We’ll share timings and age criteria.' },
+  { t: 'yellow', title: 'Visit the school', text: 'See the classrooms and courtyard, and meet the Principal and teachers.' },
+  { t: 'green', title: 'Settle in', text: 'Complete the admission form. Your child’s first week is gentle, with shorter days if needed.' },
+];
+const phone = primaryBranch.phones[0];
+---
+<Base title="Admissions" current="admissions" description={`Admissions open for ${school.admissions.currentSession} at Rainbow Kidz Pre School, Gurugram. Playgroup, Nursery, LKG and UKG.`}>
+  <section class="wrap pt-8 pb-16">
+    <h1>Admissions {school.admissions.currentSession}</h1>
+    <p class="mt-5 measure text-xl text-ink-soft">
+      The session starts in {school.admissions.sessionStarts}. Admissions run from {school.admissions.admissionWindow},
+      and seats in each class are limited.
+    </p>
+
+    <ol class="mt-14 grid gap-6 md:grid-cols-3">
+      {steps.map((s, i) => (
+        <li class="rounded-[28px] p-8 tone-soft-bg" style={tone(s.t)}>
+          <span class="grid place-items-center w-12 h-12 rounded-full font-display font-extrabold text-2xl text-white" style="background:var(--tone-ink)">{i + 1}</span>
+          <h2 class="!text-2xl mt-5">{s.title}</h2>
+          <p class="mt-2">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="band tone-soft-bg" style={tone('orange')}>
+    <div class="wrap">
+      <h2>Classes</h2>
+      <ul class="mt-10 grid gap-6 sm:grid-cols-2">
+        {school.programs.map((p) => (
+          <li class="rounded-[28px] bg-white p-8 border-4" style={`${tone(p.color)}border-color:var(--tone)`}>
+            <h3 class="!text-3xl tone-ink">{p.name}</h3>
+            <p class="mt-3">{p.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="enquire" style={tone('violet')}>
+    <div class="wrap grid gap-12 md:grid-cols-[1fr_1.2fr]">
+      <div>
+        <h2>Send an enquiry</h2>
+        <p class="mt-5 measure text-xl text-ink-soft">
+          Fill this in and we’ll open WhatsApp with your message ready to send. Nothing is stored on this website.
+        </p>
+        <p class="mt-6 text-lg">Prefer to talk? <a class="font-semibold underline underline-offset-4" href={telHref(phone)}>Call {phone}</a></p>
+      </div>
+
+      <form class="enquiry rounded-[28px] p-7 md:p-10 tone-soft-bg grid gap-5" data-enquiry novalidate>
+        <label>Parent’s name
+          <input name="parent" required autocomplete="name" />
+        </label>
+        <label>Child’s age
+          <input name="age" required inputmode="text" placeholder="For example, 3 years" />
+        </label>
+        <label>Class
+          <select name="program">
+            {school.programs.map((p) => <option>{p.name}</option>)}
+          </select>
+        </label>
+        <label>Branch
+          <select name="branch">
+            {school.branches.map((b) => <option value={b.id}>{b.name}</option>)}
+          </select>
+        </label>
+        <p class="error" data-error role="alert" hidden>Add the parent’s name and the child’s age to continue.</p>
+        <button class="btn justify-self-start" style={tone('violet')} type="submit">Continue on WhatsApp</button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ branches: school.branches.map((b) => ({ id: b.id, name: b.name, phone: b.phones[0].replace(/\D/g, '') })) }}>
+  const form = document.querySelector('[data-enquiry]');
+  const err = form.querySelector('[data-error]');
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const d = new FormData(form);
+    const parent = String(d.get('parent') || '').trim();
+    const age = String(d.get('age') || '').trim();
+    if (!parent || !age) { err.hidden = false; return; }
+    err.hidden = true;
+    const b = branches.find((x) => x.id === d.get('branch')) || branches[0];
+    const msg = `Hello Rainbow Kidz, I'm ${parent}. I'd like to enquire about ${d.get('program')} admission at the ${b.name} branch. My child is ${age} old.`;
+    window.open(`https://wa.me/${b.phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .enquiry label { display: grid; gap: .4rem; font-weight: 600; }
+  .enquiry input, .enquiry select {
+    font: inherit; font-weight: 400; padding: .75rem 1rem; border-radius: 14px; background: #fff;
+    border: 2px solid rgb(30 42 90 / .25);
+  }
+  .enquiry input:focus, .enquiry select:focus { border-color: var(--tone); outline: 3px solid var(--tone-soft); }
+  .error { color: #991b1b; font-weight: 600; }
+</style>

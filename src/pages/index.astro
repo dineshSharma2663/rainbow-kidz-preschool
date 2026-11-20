@@ -1,0 +1,288 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import RainbowMark from '../components/RainbowMark.astro';
+import {
+  school, url, tone, hex, toneOrder, eventsBySchoolYear, monthName,
+  telHref, waHref, mapHref, primaryBranch,
+} from '../lib/data';
+
+const admission = 'assets/events/02_admission-open-2026-27/02_admission-open-2026-27';
+const placards = [
+  { src: `${admission}-2.jpg`, alt: 'A child holding a sign that says: Don’t worry too much', t: 'red' },
+  { src: `${admission}-3.jpg`, alt: 'Children with their teachers holding a sign: Our teachers take care of us', t: 'yellow' },
+  { src: `${admission}-5.jpg`, alt: 'A child holding a sign: Care and protected', t: 'blue' },
+];
+
+const quoteAttribution: Record<string, string> = {
+  t1: 'Mother of a UKG student',
+  t2: 'Parent of a UKG student, translated from Hindi',
+  t3: 'Parent at Graduation Day 2024',
+};
+const quoteTones = ['indigo', 'orange', 'green'];
+const phone = primaryBranch.phones[0];
+---
+<Base current="home">
+  <!-- HERO: the one orchestrated moment. Arc draws, then the children's placards rise. -->
+  <section class="relative overflow-hidden">
+    <div class="wrap grid items-center gap-10 pt-6 pb-16 md:grid-cols-[1.05fr_1fr] md:pt-10 md:pb-24">
+      <div class="hero-copy">
+        <p class="font-display font-semibold text-xl text-ink-soft">Admissions open for {school.admissions.currentSession}</p>
+        <h1 class="mt-3">Dear Mumma and Papa, don’t worry too much.</h1>
+        <p class="mt-6 measure text-xl text-ink-soft">
+          Our children wrote that for you. For more than 15 years, Rainbow Kidz has been the first school for
+          Gurugram’s youngest learners, from Playgroup to UKG, at Palam Vihar Extn. and Rajendra Park.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a class="btn" style={tone('violet')} href={url('admissions/#enquire')}>Book a school visit</a>
+          <a class="btn btn-quiet" href={telHref(phone)}>Call {phone.replace('+91 ', '')}</a>
+        </div>
+      </div>
+
+      <div class="relative mx-auto w-full max-w-[34rem]" aria-label="Messages from our children">
+        <RainbowMark size={540} stroke={4.2} animate class="w-full h-auto" />
+        <div class="absolute inset-x-0 bottom-[-12%] grid grid-cols-3 gap-3 px-[4%]">
+          {placards.map((p, i) => (
+            <figure class:list={['pin placard aspect-[3/4]', i === 1 ? '-translate-y-[18%]' : i === 0 ? 'tilt-l' : 'tilt-r']}
+                    style={`${tone(p.t)}--d:${1200 + i * 160}ms`}>
+              <Photo src={p.src} alt={p.alt} sizes="(min-width: 768px) 12rem, 30vw" eager />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY: red -->
+  <section class="band" style={tone('red')}>
+    <div class="wrap grid gap-12 md:grid-cols-2 md:gap-16">
+      <div>
+        <h2>Why parents choose Rainbow Kidz</h2>
+        <p class="mt-6 measure text-xl text-ink-soft">
+          Ask our parents and you hear the same three things. Teachers pick up the phone. Children change
+          visibly within a year. And every festival feels like a family occasion.
+        </p>
+      </div>
+      <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2 self-center">
+        {school.highlights.map((h, i) => (
+          <li class="flex items-center gap-3 font-display font-semibold text-xl" style={tone(toneOrder[i % 7])}>
+            <span class="dot !w-4 !h-4"></span>{h.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROGRAMS: orange, one rainbow tone per class -->
+  <section class="band tone-soft-bg" style={tone('orange')} id="programs">
+    <div class="wrap">
+      <h2>Classes from Playgroup to UKG</h2>
+      <div class="mt-10" data-tabs>
+        <div role="tablist" aria-label="Classes" class="flex flex-wrap gap-3">
+          {school.programs.map((p, i) => (
+            <button role="tab" id={`tab-${p.id}`} aria-controls={`panel-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'}
+                    tabindex={i === 0 ? 0 : -1} class="prog-tab" style={tone(p.color)}>
+              <span class="dot"></span>{p.name}
+            </button>
+          ))}
+        </div>
+        {school.programs.map((p, i) => (
+          <div role="tabpanel" id={`panel-${p.id}`} aria-labelledby={`tab-${p.id}`} hidden={i !== 0}
+               class="mt-6 rounded-[28px] bg-white p-8 md:p-12 border-4" style={`${tone(p.color)}border-color:var(--tone)`}>
+            <h3 class="!text-4xl tone-ink">{p.name}</h3>
+            <p class="mt-4 measure text-xl">{p.description}</p>
+            <p class="mt-6 text-ink-soft">
+              {p.ageRange ?? 'Age criteria and batch timings are shared when you call or visit.'}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- YEAR: yellow, events laid out in school-year order -->
+  <section class="band" style={tone('yellow')} id="year">
+    <div class="wrap flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <h2>A year at Rainbow Kidz</h2>
+        <p class="mt-4 measure text-xl text-ink-soft">From the first day in April to graduation in March: the moments our parents loved most.</p>
+      </div>
+      <div class="flex gap-3">
+        <button class="strip-btn" data-strip="-1" aria-label="Scroll back">‹</button>
+        <button class="strip-btn" data-strip="1" aria-label="Scroll forward">›</button>
+      </div>
+    </div>
+    <ol class="strip mt-10" data-strip-track>
+      {eventsBySchoolYear.map((e, i) => (
+        <li style={tone(e.color)}>
+          <a href={url(`events/${e.id}/`)} class="group block">
+            <div class:list={['pin aspect-[4/5]', i % 2 ? 'tilt-r' : 'tilt-l']}>
+              <Photo src={e.images[0]} alt={`${e.title} at Rainbow Kidz`} sizes="(min-width: 768px) 18rem, 70vw" />
+            </div>
+            <p class="mt-5 font-display font-semibold tone-ink">{monthName(e)}</p>
+            <h3 class="mt-1 group-hover:underline underline-offset-4 decoration-[3px]" style="text-decoration-color:var(--tone)">{e.title}</h3>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <div class="wrap mt-10">
+      <a class="btn" style={tone('yellow') + 'color:#1e2a5a'} href={url('events/')}>See every event</a>
+    </div>
+  </section>
+
+  <!-- LEARNING: green -->
+  <section class="band tone-soft-bg" style={tone('green')}>
+    <div class="wrap grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-center">
+      <div>
+        <h2>Learning through play</h2>
+        <p class="mt-5 measure text-xl text-ink-soft">
+          Every week has a theme children can touch and say out loud: a colour day, a shape day, Hindi swar,
+          a turn on the mic. Big ideas like safety and kindness come through stories and games.
+        </p>
+        <ul class="mt-8 flex flex-wrap gap-2.5">
+          {school.learningActivities.map((a, i) => <li class="chip" style={tone(toneOrder[i % 7])}>{a}</li>)}
+        </ul>
+      </div>
+      <div class="rounded-[28px] bg-white p-6 md:p-8">
+        <div class="pin tilt-r aspect-[4/3]" style={tone('green')}>
+          <Photo src={school.summerCamp.image} alt="Children at the summer camp space workshop" sizes="(min-width: 768px) 30rem, 90vw" />
+        </div>
+        <h3 class="mt-7">Summer camp</h3>
+        <p class="mt-2 text-ink-soft">{school.summerCamp.activities.join(', ')}.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY: blue -->
+  <section class="band" style={tone('blue')}>
+    <div class="wrap">
+      <h2 class="measure">Safe, seen and cared for</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {school.safety.programs.map((s) => (
+          <div class="rounded-[28px] p-8 tone-soft-bg">
+            <h3 class="tone-ink">{s.title}</h3>
+            <p class="mt-3">{s.description}</p>
+          </div>
+        ))}
+        <div class="rounded-[28px] p-8 border-4" style="border-color:var(--tone-soft)">
+          <h3 class="tone-ink">Around the campus</h3>
+          <ul class="mt-3 space-y-1.5">
+            {school.safety.facilities.map((f) => <li class="flex items-center gap-2.5"><span class="dot"></span>{f}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARENTS: indigo, Headspace-style floating blobs around the heading -->
+  <section class="band tone-soft-bg relative overflow-hidden" style={tone('indigo')}>
+    <div aria-hidden="true">
+      {['red', 'yellow', 'green', 'violet', 'orange'].map((t, i) => (
+        <span class="blob" style={`background:${hex(t)};--x:${[6, 88, 14, 80, 50][i]}%;--y:${[14, 10, 70, 62, 4][i]}%;--s:${[64, 44, 36, 58, 28][i]}px`}></span>
+      ))}
+    </div>
+    <div class="wrap relative">
+      <h2 class="text-center">What parents say</h2>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {school.testimonials.items.map((t, i) => (
+          <figure class="flex flex-col rounded-[28px] bg-white p-8" style={tone(quoteTones[i])}>
+            <span class="font-display text-6xl leading-none tone-ink" aria-hidden="true">“</span>
+            <blockquote class="font-display text-[1.4rem] font-semibold leading-snug">{t.featuredQuote}</blockquote>
+            <figcaption class="mt-auto pt-6 text-ink-soft">
+              {quoteAttribution[t.id]}
+              <a class="mt-2 block font-semibold tone-ink underline underline-offset-4" href={t.instagram} rel="noopener">Watch on Instagram</a>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT: violet -->
+  <section class="band" style={tone('violet')} id="visit">
+    <div class="wrap">
+      <h2>Come and see us</h2>
+      <p class="mt-4 measure text-xl text-ink-soft">Two branches in Gurugram. Call or message either one to book a visit.</p>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {school.branches.map((b, i) => (
+          <article class="rounded-[28px] p-8 md:p-10 tone-soft-bg" style={tone(i ? 'blue' : 'violet')}>
+            <h3 class="!text-3xl">{b.name}</h3>
+            <ul class="mt-4 space-y-1 text-lg">
+              {b.phones.map((p) => <li><a class="font-semibold hover:underline" href={telHref(p)}>{p}</a></li>)}
+            </ul>
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a class="btn" style={tone(i ? 'blue' : 'violet')} href={waHref(b.phones[0], `Hello, I'd like to visit the ${b.name} branch.`)} rel="noopener">WhatsApp</a>
+              <a class="btn btn-quiet" href={mapHref(b.name)} rel="noopener">Open in Maps</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-copy > * { animation: rise .7s cubic-bezier(.2, .8, .2, 1) both; }
+  .hero-copy > :nth-child(2) { animation-delay: 80ms; }
+  .hero-copy > :nth-child(3) { animation-delay: 160ms; }
+  .hero-copy > :nth-child(4) { animation-delay: 240ms; }
+  .placard { animation: pop .6s cubic-bezier(.3, 1.4, .5, 1) both; animation-delay: var(--d); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes pop { from { opacity: 0; transform: translateY(40px) scale(.9); } }
+
+  .prog-tab {
+    display: inline-flex; align-items: center; gap: .55rem;
+    padding: .65rem 1.3rem .55rem; border-radius: 999px; background: #fff;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+    box-shadow: inset 0 0 0 3px var(--tone);
+  }
+  .prog-tab[aria-selected='true'] { background: var(--tone); color: #fff; box-shadow: 0 4px 0 var(--tone-ink); }
+  .prog-tab[aria-selected='true'] .dot { background: #fff; }
+
+  .strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(72vw, 18rem); gap: 2rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding: 1rem max(1.25rem, calc((100vw - 72rem) / 2)) 1.5rem;
+    scroll-padding-inline: max(1.25rem, calc((100vw - 72rem) / 2));
+  }
+  .strip::-webkit-scrollbar { display: none; }
+  .strip > li { scroll-snap-align: start; }
+  .strip-btn {
+    width: 3rem; height: 3rem; border-radius: 999px; font-size: 1.8rem; line-height: 1;
+    background: #fff; box-shadow: inset 0 0 0 3px var(--color-ink), 0 3px 0 var(--color-ink);
+  }
+  .strip-btn:active { transform: translateY(3px); box-shadow: inset 0 0 0 3px var(--color-ink); }
+
+  .blob { position: absolute; left: var(--x); top: var(--y); width: var(--s); height: var(--s); border-radius: 46% 54% 50% 50% / 55% 45% 55% 45%; opacity: .9; }
+  @media (max-width: 767px) { .blob { opacity: .35; } }
+</style>
+
+<script>
+  // Program tabs (arrow keys move between tabs)
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const select = (tab: HTMLButtonElement) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        const next = tabs[(i + d + tabs.length) % tabs.length];
+        next.focus(); select(next);
+      });
+    });
+  });
+
+  // Event strip arrows
+  const track = document.querySelector<HTMLElement>('[data-strip-track]');
+  document.querySelectorAll<HTMLButtonElement>('[data-strip]').forEach((b) =>
+    b.addEventListener('click', () => track?.scrollBy({ left: Number(b.dataset.strip) * track.clientWidth * 0.8, behavior: 'smooth' })),
+  );
+</script>

@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import RainbowMark from '../components/RainbowMark.astro';
+import { url, tone } from '../lib/data';
+---
+<Base title="Page not found">
+  <section class="wrap py-24 text-center">
+    <RainbowMark size={220} stroke={5} class="mx-auto" />
+    <h1 class="mt-8">This page has gone out to play.</h1>
+    <p class="mt-4 text-xl text-ink-soft">The link may be old. Head back to the home page to find what you need.</p>
+    <a class="btn mt-10" style={tone('blue')} href={url()}>Go to the home page</a>
+  </section>
+</Base>

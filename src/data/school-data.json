@@ -1,0 +1,651 @@
+{
+  "_meta": {
+    "version": "0.1.0",
+    "source": "Instagram @rainbowkidzpreschool (203 posts, Dec 2023 - Nov 2026), analysed 20-21 Nov 2026",
+    "status": "demo-draft",
+    "notes": [
+      "Fields marked \"verified\": false are inferred from Instagram and must be confirmed with the school.",
+      "Images are frames grabbed from compressed Instagram reels: fine for the demo, request originals for production.",
+      "Children's faces and parent testimonials need written consent before the site goes public."
+    ]
+  },
+  "school": {
+    "name": "Rainbow Kidz Pre School",
+    "shortName": "RKPS",
+    "city": "Gurugram",
+    "state": "Haryana",
+    "foundedYear": {
+      "value": 2010,
+      "verified": false,
+      "note": "Captions say 14 yrs (Mar 2024), 15 yrs (Dec 2024) but 17+ yrs (Sep 2026)"
+    },
+    "taglines": [
+      "A Colorful Start to Lifelong Learning!",
+      "Building Bright Futures",
+      "Designed for Growth and Discovery"
+    ],
+    "email": "kidzrainbow@gmail.com",
+    "instagram": "https://www.instagram.com/rainbowkidzpreschool/",
+    "leadership": [
+      {
+        "role": "Director",
+        "name": null,
+        "verified": false,
+        "note": "Male, addressed as 'Director Sir'; appears at events and award ceremonies"
+      },
+      {
+        "role": "Principal",
+        "name": null,
+        "verified": false,
+        "note": "Female; parents describe her as soft-spoken, listens and solves queries"
+      }
+    ],
+    "teachers": {
+      "verified": false,
+      "note": "Names heard in testimonials; spellings from speech-to-text. Publish only with consent.",
+      "names": [
+        "Deepika",
+        "Asha Negi",
+        "Mamta",
+        "Neela"
+      ]
+    }
+  },
+  "branches": [
+    {
+      "id": "palam-vihar",
+      "name": "Palam Vihar Extn.",
+      "phones": [
+        "+91 98109 46354",
+        "+91 98104 16354"
+      ],
+      "address": null,
+      "mapUrl": null,
+      "instagram": "https://www.instagram.com/rainbowkidzpreschool/",
+      "verified": false
+    },
+    {
+      "id": "rajendra-park",
+      "name": "Rajendra Park",
+      "phones": [
+        "+91 97736 00435",
+        "+91 99103 90515"
+      ],
+      "address": null,
+      "mapUrl": null,
+      "instagram": "https://www.instagram.com/rainbowkidzrajendra/",
+      "verified": false
+    }
+  ],
+  "programs": [
+    {
+      "id": "playgroup",
+      "name": "Playgroup",
+      "ageRange": null,
+      "color": "red",
+      "description": "First steps away from home: songs, sand, colours and lots of cuddles while little ones learn to settle in."
+    },
+    {
+      "id": "nursery",
+      "name": "Nursery",
+      "ageRange": null,
+      "color": "orange",
+      "description": "Rhymes, shapes, colour days and first scribbles, with a gentle routine that builds confidence."
+    },
+    {
+      "id": "lkg",
+      "name": "LKG",
+      "ageRange": null,
+      "color": "yellow",
+      "description": "Letters, numbers and Hindi swar through play, plus stage time with Speak on Mic."
+    },
+    {
+      "id": "ukg",
+      "name": "UKG",
+      "ageRange": null,
+      "color": "green",
+      "description": "Reading, writing and number work that gets children ready for Class 1, ending with Graduation Day."
+    }
+  ],
+  "highlights": [
+    {
+      "id": "teachers",
+      "title": "Quality teachers",
+      "icon": "teacher"
+    },
+    {
+      "id": "atmosphere",
+      "title": "Interactive atmosphere",
+      "icon": "chat"
+    },
+    {
+      "id": "infrastructure",
+      "title": "Good infrastructure",
+      "icon": "building"
+    },
+    {
+      "id": "education",
+      "title": "Quality education",
+      "icon": "book"
+    },
+    {
+      "id": "smart-class",
+      "title": "Smart class",
+      "icon": "screen"
+    },
+    {
+      "id": "cctv",
+      "title": "CCTV surveillance",
+      "icon": "camera"
+    },
+    {
+      "id": "hygiene",
+      "title": "Hygienic classrooms",
+      "icon": "sparkle"
+    }
+  ],
+  "admissions": {
+    "sessionStarts": "April",
+    "admissionWindow": "February to March",
+    "currentSession": "2026-27",
+    "messages": [
+      "Admissions Open 2026-27",
+      "Limited seats"
+    ],
+    "kidVoiceCopy": {
+      "source": "Admission 2026-27 reel (DWJqmiFE6Dg): kids hold placards addressed to parents",
+      "lines": [
+        "Dear Mumma and Papa",
+        "Don't worry too much",
+        "Our teachers take care of us",
+        "We play",
+        "Care and protected"
+      ]
+    },
+    "fees": null,
+    "facilities": {
+      "transport": null,
+      "meals": null,
+      "daycare": null
+    }
+  },
+  "theme": {
+    "concept": "Rainbow: every section, program and event carries one of seven rainbow hues; the full spectrum appears together only in signature moments (hero, logo, footer arc).",
+    "logoColors": {
+      "red": "#E53935",
+      "orange": "#FB8C00",
+      "green": "#43A047",
+      "blue": "#1E88E5"
+    },
+    "rainbow": [
+      {
+        "id": "red",
+        "base": "#EF4444",
+        "soft": "#FEE2E2",
+        "ink": "#991B1B"
+      },
+      {
+        "id": "orange",
+        "base": "#F97316",
+        "soft": "#FFEDD5",
+        "ink": "#9A3412"
+      },
+      {
+        "id": "yellow",
+        "base": "#FACC15",
+        "soft": "#FEF9C3",
+        "ink": "#854D0E"
+      },
+      {
+        "id": "green",
+        "base": "#22C55E",
+        "soft": "#DCFCE7",
+        "ink": "#166534"
+      },
+      {
+        "id": "blue",
+        "base": "#3B82F6",
+        "soft": "#DBEAFE",
+        "ink": "#1E40AF"
+      },
+      {
+        "id": "indigo",
+        "base": "#6366F1",
+        "soft": "#E0E7FF",
+        "ink": "#3730A3"
+      },
+      {
+        "id": "violet",
+        "base": "#A855F7",
+        "soft": "#F3E8FF",
+        "ink": "#6B21A8"
+      }
+    ],
+    "neutrals": {
+      "paper": "#FFFFFF",
+      "cloud": "#F8FAFC",
+      "text": "#1F2937",
+      "navy": "#1E2A5A"
+    },
+    "usage": {
+      "text": "Use 'ink' shades for text on 'soft' backgrounds; 'base' for fills, shapes and accents (yellow base never for text).",
+      "sectionColors": {
+        "about": "red",
+        "programs": "orange",
+        "events": "yellow",
+        "summerCamp": "green",
+        "safety": "blue",
+        "testimonials": "indigo",
+        "admissions": "violet"
+      }
+    },
+    "draft": true
+  },
+  "events": [
+    {
+      "rank": 1,
+      "id": "picnic-eco-adventure-camp",
+      "title": "Picnic: Eco Adventure Camp",
+      "date": "2025-12-04",
+      "category": "trip",
+      "likes": 80,
+      "color": "green",
+      "summary": "Day trip to an eco adventure camp: climbing wall, bouncy castle, net crawl, potter demo and a meal together, all in school uniform.",
+      "instagram": "https://www.instagram.com/p/DR1bVGJDYqY/",
+      "images": [
+        "assets/events/01_picnic-eco-adventure-camp/01_picnic-eco-adventure-camp-4.jpg",
+        "assets/events/01_picnic-eco-adventure-camp/01_picnic-eco-adventure-camp-1.jpg",
+        "assets/events/01_picnic-eco-adventure-camp/01_picnic-eco-adventure-camp-2.jpg",
+        "assets/events/01_picnic-eco-adventure-camp/01_picnic-eco-adventure-camp-3.jpg",
+        "assets/events/01_picnic-eco-adventure-camp/01_picnic-eco-adventure-camp-5.jpg"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "admission-open-2026-27",
+      "title": "Admission Open 2026-27",
+      "date": "2026-03",
+      "category": "admissions",
+      "likes": 69,
+      "color": "violet",
+      "summary": "Children around campus hold up messages for their parents: 'Don't worry too much', 'Our teachers take care of us'.",
+      "instagram": "https://www.instagram.com/p/DWJqmiFE6Dg/",
+      "images": [
+        "assets/events/02_admission-open-2026-27/02_admission-open-2026-27-3.jpg",
+        "assets/events/02_admission-open-2026-27/02_admission-open-2026-27-1.jpg",
+        "assets/events/02_admission-open-2026-27/02_admission-open-2026-27-2.jpg",
+        "assets/events/02_admission-open-2026-27/02_admission-open-2026-27-4.jpg",
+        "assets/events/02_admission-open-2026-27/02_admission-open-2026-27-5.jpg"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "mahashivratri-shiv-barat",
+      "title": "Mahashivratri: Shiv Barat",
+      "date": "2026-02-15",
+      "category": "festival",
+      "likes": 64,
+      "color": "indigo",
+      "summary": "Children dressed as Shiva, Parvati and the baraat walk in procession across campus, ending in a decorated stage tableau.",
+      "instagram": "https://www.instagram.com/p/DUv9k6cgaMD/",
+      "images": [
+        "assets/events/03_mahashivratri-shiv-barat/03_mahashivratri-shiv-barat-5.jpg",
+        "assets/events/03_mahashivratri-shiv-barat/03_mahashivratri-shiv-barat-1.jpg",
+        "assets/events/03_mahashivratri-shiv-barat/03_mahashivratri-shiv-barat-2.jpg",
+        "assets/events/03_mahashivratri-shiv-barat/03_mahashivratri-shiv-barat-3.jpg",
+        "assets/events/03_mahashivratri-shiv-barat/03_mahashivratri-shiv-barat-4.jpg"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "mothers-day",
+      "title": "Mother's Day",
+      "date": "2026-05-25",
+      "category": "family",
+      "likes": 58,
+      "color": "red",
+      "summary": "Mothers join in: tilak welcome, a catwalk, dances and games in paper-flower decorated classrooms.",
+      "instagram": "https://www.instagram.com/p/DYxPhxoCOyS/",
+      "images": [
+        "assets/events/04_mothers-day/04_mothers-day-1.jpg",
+        "assets/events/04_mothers-day/04_mothers-day-2.jpg",
+        "assets/events/04_mothers-day/04_mothers-day-3.jpg",
+        "assets/events/04_mothers-day/04_mothers-day-4.jpg",
+        "assets/events/04_mothers-day/04_mothers-day-5.jpg"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "childrens-day-magic-show",
+      "title": "Children's Day Magic Show",
+      "date": "2025-11-17",
+      "category": "celebration",
+      "likes": 54,
+      "color": "yellow",
+      "summary": "Cartoon-themed balloon setup (Mickey, Doraemon), a live magic show in the courtyard and group photos by class.",
+      "instagram": "https://www.instagram.com/p/DRKS-zpDsyp/",
+      "images": [
+        "assets/events/05_childrens-day-magic-show/05_childrens-day-magic-show-3.jpg",
+        "assets/events/05_childrens-day-magic-show/05_childrens-day-magic-show-1.jpg",
+        "assets/events/05_childrens-day-magic-show/05_childrens-day-magic-show-2.jpg",
+        "assets/events/05_childrens-day-magic-show/05_childrens-day-magic-show-4.jpg",
+        "assets/events/05_childrens-day-magic-show/05_childrens-day-magic-show-5.jpg"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "republic-day",
+      "title": "Republic Day (77th)",
+      "date": "2026-01-26",
+      "category": "national-day",
+      "likes": 52,
+      "color": "orange",
+      "summary": "Whole school gathers in the courtyard; children speak and perform in tricolour outfits.",
+      "instagram": "https://www.instagram.com/p/DT98ErvD5GN/",
+      "images": [
+        "assets/events/06_republic-day/06_republic-day-5.jpg",
+        "assets/events/06_republic-day/06_republic-day-3.jpg",
+        "assets/events/06_republic-day/06_republic-day-4.jpg"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "results-awards-day",
+      "title": "Results and Awards Day",
+      "date": "2025-04-07",
+      "category": "milestone",
+      "likes": 48,
+      "color": "blue",
+      "summary": "Report cards and certificates handed out in front of a rainbow-decorated stage; proof of learning outcomes.",
+      "instagram": "https://www.instagram.com/p/DIJX4Whph0H/",
+      "images": [
+        "assets/events/07_results-awards-day/07_results-awards-day-2.jpg",
+        "assets/events/07_results-awards-day/07_results-awards-day-1.jpg",
+        "assets/events/07_results-awards-day/07_results-awards-day-3.jpg",
+        "assets/events/07_results-awards-day/07_results-awards-day-4.jpg",
+        "assets/events/07_results-awards-day/07_results-awards-day-5.jpg"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "holi",
+      "title": "Holi",
+      "date": "2026-03-03",
+      "category": "festival",
+      "likes": 46,
+      "color": "violet",
+      "summary": "Story of Prahlad, gulal play in the courtyard and colourful hand-print activities.",
+      "instagram": "https://www.instagram.com/p/DVax-8JFTHc/",
+      "images": [
+        "assets/events/08_holi/08_holi-5.jpg",
+        "assets/events/08_holi/08_holi-1.jpg",
+        "assets/events/08_holi/08_holi-3.jpg",
+        "assets/events/08_holi/08_holi-4.jpg"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "graduation-day-2026",
+      "title": "Graduation Day 2026",
+      "date": "2026-03-24",
+      "category": "milestone",
+      "likes": 43,
+      "color": "yellow",
+      "summary": "Graduation ceremony with speeches from the Principal and Director, kids' dances and medals.",
+      "instagram": "https://www.instagram.com/p/DWQ3pOsjYBi/",
+      "images": [
+        "assets/events/09_graduation-day-2026/09_graduation-day-2026-5.jpg",
+        "assets/events/09_graduation-day-2026/09_graduation-day-2026-1.jpg",
+        "assets/events/09_graduation-day-2026/09_graduation-day-2026-2.jpg",
+        "assets/events/09_graduation-day-2026/09_graduation-day-2026-3.jpg",
+        "assets/events/09_graduation-day-2026/09_graduation-day-2026-4.jpg"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "annual-function-15-years",
+      "title": "Annual Function: 15 Glorious Years",
+      "date": "2024-12-28",
+      "category": "milestone",
+      "likes": 13,
+      "color": "red",
+      "summary": "Celebration of 15 years on a hired auditorium stage: costumes, group dances and guests welcomed with tilak.",
+      "instagram": "https://www.instagram.com/p/DEIJ2gZTbdz/",
+      "images": [
+        "assets/events/10_annual-function-15-years/10_annual-function-15-years-5.jpg",
+        "assets/events/10_annual-function-15-years/10_annual-function-15-years-1.jpg",
+        "assets/events/10_annual-function-15-years/10_annual-function-15-years-2.jpg",
+        "assets/events/10_annual-function-15-years/10_annual-function-15-years-3.jpg",
+        "assets/events/10_annual-function-15-years/10_annual-function-15-years-4.jpg"
+      ],
+      "highlight": {
+        "image": "assets/instagram/2024-12_highlight-annual-function-24.png",
+        "text": "The Annual Function '24 was a grand success. Thank you to all the lovely parents and children for their contribution."
+      }
+    }
+  ],
+  "yearlyCalendar": [
+    {
+      "month": "April",
+      "events": [
+        "New session begins",
+        "Baisakhi",
+        "Earth Day",
+        "Results Day"
+      ]
+    },
+    {
+      "month": "May",
+      "events": [
+        "Mother's Day",
+        "Summer camp"
+      ]
+    },
+    {
+      "month": "June",
+      "events": [
+        "Summer camp",
+        "Environment Day",
+        "Father's Day"
+      ]
+    },
+    {
+      "month": "July",
+      "events": [
+        "Back to school",
+        "Rainy day",
+        "Colour days"
+      ]
+    },
+    {
+      "month": "August",
+      "events": [
+        "Independence Day",
+        "Raksha Bandhan",
+        "Janmashtami"
+      ]
+    },
+    {
+      "month": "September",
+      "events": [
+        "Teachers' Day",
+        "Ganesh Chaturthi",
+        "Hindi Diwas"
+      ]
+    },
+    {
+      "month": "October",
+      "events": [
+        "Navratri",
+        "Dussehra",
+        "Diwali"
+      ]
+    },
+    {
+      "month": "November",
+      "events": [
+        "Children's Day",
+        "Gurupurab"
+      ]
+    },
+    {
+      "month": "December",
+      "events": [
+        "Picnic",
+        "Christmas",
+        "Annual Function"
+      ]
+    },
+    {
+      "month": "January",
+      "events": [
+        "Republic Day",
+        "Vasant Panchami"
+      ]
+    },
+    {
+      "month": "February",
+      "events": [
+        "Mahashivratri"
+      ]
+    },
+    {
+      "month": "March",
+      "events": [
+        "Holi",
+        "Graduation Day",
+        "Admissions"
+      ]
+    }
+  ],
+  "learningActivities": [
+    "Colour days (red, yellow, orange)",
+    "Shape days (circle, triangle)",
+    "Hindi swar and two-letter words",
+    "Alphabet activities",
+    "Standing and sleeping lines",
+    "Fruit matching",
+    "Speak on Mic",
+    "Ladder drill and hula-hoop in/out",
+    "Greetings and manners",
+    "Yoga"
+  ],
+  "safety": {
+    "facilities": [
+      "CCTV surveillance",
+      "Hygienic classrooms"
+    ],
+    "programs": [
+      {
+        "title": "Good Touch / Bad Touch",
+        "description": "Body-safety awareness session for children."
+      },
+      {
+        "title": "Stranger Danger: No, Go, Tell",
+        "description": "Children learn to say no, move away and tell a trusted adult."
+      }
+    ]
+  },
+  "summerCamp": {
+    "years": [
+      2024,
+      2025
+    ],
+    "activities": [
+      "Yoga",
+      "Dance",
+      "Art and craft",
+      "Space workshop",
+      "Pool party",
+      "Rain dance",
+      "Mango Day",
+      "Fashion show",
+      "Environment Day"
+    ],
+    "image": "assets/instagram/2025-05-26_summer-camp-space-workshop.png"
+  },
+  "testimonials": {
+    "consentStatus": "pending",
+    "postedOn": "2024-03-24",
+    "themes": [
+      "Communication: teachers pick up calls and give timely feedback",
+      "Visible progress: speech, confidence, grades",
+      "Warmth: 'second mother', 'like family'",
+      "Festivals and activities"
+    ],
+    "items": [
+      {
+        "id": "t1",
+        "parent": "Mother of Tejas",
+        "child": {
+          "name": "Tejas",
+          "class": "UKG",
+          "nameVerified": false
+        },
+        "language": "en",
+        "setting": "Selfie video recorded at home",
+        "instagram": "https://www.instagram.com/reel/C45vKuhC-5u/",
+        "duration": "3:23",
+        "poster": "assets/instagram/2024-03-24_testimonial-1_mother-selfie.png",
+        "transcript": "analysis/transcripts/C45vKuhC-5u.txt",
+        "quotes": [
+          "She is the second mother of my child. Always giving timely feedback, always picking up the phone.",
+          "The Principal is soft-spoken; she listens and she solves every query.",
+          "When he started school he could not even speak. Now I see improvement in his writing, reading and speaking."
+        ],
+        "featuredQuote": "She is the second mother of my child. Always giving timely feedback, always picking up the phone."
+      },
+      {
+        "id": "t2",
+        "parent": "Parents of UKG students",
+        "child": {
+          "name": null,
+          "class": "UKG"
+        },
+        "language": "hi",
+        "translated": true,
+        "setting": "Graduation Ceremony 2024, at the mic",
+        "instagram": "https://www.instagram.com/reel/C45eZTPLEBx/",
+        "duration": "2:55",
+        "poster": "assets/instagram/2024-03-24_testimonial-2_mother-graduation.png",
+        "transcript": "analysis/transcripts/C45eZTPLEBx.en.txt",
+        "quotes": [
+          "In one year she learnt so much that people don't believe she is in UKG; they say she must be in Class 1 or 2.",
+          "When the teacher noticed my child behaving differently, she called me at night to tell me she was fine.",
+          "Thank you to Neela Ma'am, Mamta Ma'am and Principal Ma'am for the warm welcome."
+        ],
+        "featuredQuote": "In one year she learnt so much that people don't believe she is in UKG."
+      },
+      {
+        "id": "t3",
+        "parent": "Parent of Aarna and her brother",
+        "child": {
+          "name": "Aarna",
+          "class": "UKG",
+          "nameVerified": false
+        },
+        "language": "en+hi",
+        "setting": "Graduation Ceremony 2024, at the mic",
+        "instagram": "https://www.instagram.com/reel/C45d_sFIF-w/",
+        "duration": "2:31",
+        "poster": "assets/instagram/2024-03-24_testimonial-3_mother-graduation.png",
+        "transcript": "analysis/transcripts/C45d_sFIF-w.txt",
+        "quotes": [
+          "Whether I am in Gurgaon or in my hometown, she always picks my call. Communication is very important for a parent.",
+          "Within two years my son became so confident. I never thought he would get such a grade.",
+          "You support children like a family and care for them like your own."
+        ],
+        "featuredQuote": "You support children like a family and care for them like your own."
+      }
+    ]
+  },
+  "openQuestions": [
+    "Founding year and the Director's name and photo",
+    "Exact addresses, map pins and timings for both branches",
+    "Classes per branch, age criteria, batch size, teacher:child ratio",
+    "Fees, transport, meals, day-care",
+    "Original high-resolution photos, videos and logo file",
+    "Written consent for children's faces and testimonial quotes",
+    "Whether to include @rainbowkidzrajendra content"
+  ]
+}

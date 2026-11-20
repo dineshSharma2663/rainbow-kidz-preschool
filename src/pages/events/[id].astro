@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { url, tone, eventsBySchoolYear, formatDate, categoryLabel, type SchoolEvent } from '../../lib/data';
+
+export function getStaticPaths() {
+  return eventsBySchoolYear.map((event, i) => ({
+    params: { id: event.id },
+    props: {
+      event,
+      prev: eventsBySchoolYear[(i - 1 + eventsBySchoolYear.length) % eventsBySchoolYear.length],
+      next: eventsBySchoolYear[(i + 1) % eventsBySchoolYear.length],
+    },
+  }));
+}
+interface Props { event: SchoolEvent; prev: SchoolEvent; next: SchoolEvent }
+const { event: e, prev, next } = Astro.props;
+---
+<Base title={e.title} current="events" description={e.summary}>
+  <article class="pb-24" style={tone(e.color)}>
+    <header class="wrap pt-8">
+      <a href={url('events/')} class="font-semibold tone-ink underline underline-offset-4">All events</a>
+      <h1 class="mt-5">{e.title}</h1>
+      <p class="mt-3 font-display font-semibold text-xl tone-ink">{formatDate(e)}, {categoryLabel[e.category] ?? e.category}</p>
+      <p class="mt-5 measure text-xl text-ink-soft">{e.summary}</p>
+    </header>
+
+    <ul class="wrap mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-7">
+      {e.images.map((src, i) => (
+        <li class:list={[i === 0 && 'col-span-2 row-span-2']}>
+          <button class:list={['pin w-full h-full block cursor-zoom-in', i % 2 ? 'tilt-r' : 'tilt-l', i === 0 ? 'aspect-square' : 'aspect-[4/5]']}
+                  data-open={i} aria-label={`Open photo ${i + 1} of ${e.images.length}`}>
+            <Photo src={src} alt={`${e.title}, photo ${i + 1}`} eager={i === 0}
+                   sizes={i === 0 ? '(min-width: 768px) 46rem, 95vw' : '(min-width: 768px) 22rem, 45vw'} />
+          </button>
+        </li>
+      ))}
+    </ul>
+
+    <p class="wrap mt-12">
+      <a class="btn" style={tone(e.color) + (e.color === 'yellow' ? 'color:#1e2a5a' : '')} href={e.instagram} rel="noopener">Watch the video on Instagram</a>
+    </p>
+
+    <nav class="wrap mt-16 grid gap-4 sm:grid-cols-2" aria-label="More events">
+      <a href={url(`events/${prev.id}/`)} class="rounded-[24px] p-6 tone-soft-bg" style={tone(prev.color)}>
+        <span class="text-ink-soft">Previous</span><span class="block font-display font-bold text-2xl">{prev.title}</span>
+      </a>
+      <a href={url(`events/${next.id}/`)} class="rounded-[24px] p-6 tone-soft-bg sm:text-right" style={tone(next.color)}>
+        <span class="text-ink-soft">Next</span><span class="block font-display font-bold text-2xl">{next.title}</span>
+      </a>
+    </nav>
+  </article>
+
+  <dialog class="viewer" aria-label={`${e.title} photos`}>
+    <div class="viewer-stage">
+      {e.images.map((src, i) => (
+        <figure data-slide={i} hidden>
+          <Photo src={src} alt={`${e.title}, photo ${i + 1}`} sizes="95vw" />
+        </figure>
+      ))}
+    </div>
+    <div class="viewer-bar">
+      <button data-step="-1" aria-label="Previous photo">‹</button>
+      <span data-count></span>
+      <button data-step="1" aria-label="Next photo">›</button>
+      <button data-close aria-label="Close">Close</button>
+    </div>
+  </dialog>
+</Base>
+
+<style>
+  .viewer { margin: auto; padding: 0; border: 0; background: transparent; max-width: min(92vw, 60rem); width: 100%; }
+  .viewer::backdrop { background: rgb(30 42 90 / .88); }
+  .viewer[open] { animation: open .22s ease-out; }
+  @keyframes open { from { opacity: 0; transform: scale(.96); } }
+  .viewer-stage img { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 18px; background: #000; }
+  .viewer-bar { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; color: #fff; font-family: var(--font-display); font-weight: 700; }
+  .viewer-bar button { min-width: 3rem; height: 3rem; padding-inline: 1rem; border-radius: 999px; background: #fff; color: var(--color-ink); font-size: 1.2rem; }
+</style>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('.viewer')!;
+  const slides = [...dlg.querySelectorAll<HTMLElement>('[data-slide]')];
+  const count = dlg.querySelector<HTMLElement>('[data-count]')!;
+  let at = 0;
+  const show = (i: number) => {
+    at = (i + slides.length) % slides.length;
+    slides.forEach((s, k) => (s.hidden = k !== at));
+    count.textContent = `${at + 1} / ${slides.length}`;
+  };
+  document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
+    b.addEventListener('click', () => { show(Number(b.dataset.open)); dlg.showModal(); }),
+  );
+  dlg.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => b.addEventListener('click', () => show(at + Number(b.dataset.step))));
+  dlg.querySelector('[data-close]')!.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (ev) => { if (ev.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowRight') show(at + 1);
+    if (ev.key === 'ArrowLeft') show(at - 1);
+  });
+</script>

@@ -1,0 +1,17 @@
+---
+import { Picture } from 'astro:assets';
+import { img } from '../lib/data';
+
+/** A school photo: AVIF/WebP at phone and desktop widths, lazy by default. */
+interface Props { src: string; alt: string; sizes?: string; eager?: boolean; class?: string }
+const { src, alt, sizes = '(min-width: 768px) 33vw, 90vw', eager = false, class: cls } = Astro.props;
+const meta = img(src);
+const widths = [360, 540, 720].filter((w) => w <= meta.width);
+if (!widths.includes(meta.width) && meta.width < 720) widths.push(meta.width);
+---
+<Picture
+  src={meta} alt={alt} widths={widths} sizes={sizes}
+  formats={['avif', 'webp']} quality={70}
+  loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'}
+  class={cls}
+/>

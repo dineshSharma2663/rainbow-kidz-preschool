@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { url, tone, eventsBySchoolYear, formatDate, categoryLabel } from '../../lib/data';
+
+const categories = [...new Set(eventsBySchoolYear.map((e) => e.category))];
+---
+<Base title="Events" current="events" description="Festivals, trips and milestones at Rainbow Kidz Pre School, Gurugram.">
+  <section class="wrap pt-8 pb-24">
+    <h1>Events and celebrations</h1>
+    <p class="mt-5 measure text-xl text-ink-soft">
+      Festivals with costumes and stories, trips, family days and the big milestones of the school year.
+    </p>
+
+    <div class="mt-10 flex flex-wrap gap-2.5" role="group" aria-label="Filter events">
+      <button class="chip filter" aria-pressed="true" data-filter="all">All events</button>
+      {categories.map((c) => <button class="chip filter" aria-pressed="false" data-filter={c}>{categoryLabel[c] ?? c}</button>)}
+    </div>
+
+    <ul class="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+      {eventsBySchoolYear.map((e, i) => (
+        <li data-cat={e.category} style={tone(e.color)}>
+          <a href={url(`events/${e.id}/`)} class="group block">
+            <div class:list={['pin aspect-[4/3]', i % 2 ? 'tilt-r' : 'tilt-l']}>
+              <Photo src={e.images[0]} alt={`${e.title} at Rainbow Kidz`} sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 90vw" />
+            </div>
+            <p class="mt-5 font-semibold tone-ink">{formatDate(e)}</p>
+            <h2 class="!text-2xl mt-1 group-hover:underline underline-offset-4 decoration-[3px]" style="text-decoration-color:var(--tone)">{e.title}</h2>
+            <p class="mt-2 text-ink-soft">{e.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .filter { cursor: pointer; }
+  .filter[aria-pressed='true'] { background: var(--color-ink); color: #fff; }
+</style>
+
+<script>
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const items = [...document.querySelectorAll<HTMLElement>('[data-cat]')];
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const f = b.dataset.filter;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      items.forEach((it) => (it.hidden = f !== 'all' && it.dataset.cat !== f));
+    }),
+  );
+</script>

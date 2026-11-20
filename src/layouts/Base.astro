@@ -1,0 +1,103 @@
+---
+import '../styles/global.css';
+import RainbowMark from '../components/RainbowMark.astro';
+import { school, url, primaryBranch, telHref, waHref, toneOrder, hex } from '../lib/data';
+
+interface Props { title?: string; description?: string; current?: 'home' | 'events' | 'admissions' | 'contact' }
+const { title, description, current = 'home' } = Astro.props;
+
+const name = school.school.name;
+const pageTitle = title ? `${title} | ${name}` : `${name}, Gurugram`;
+const metaDescription = description ??
+  `${name} in Gurugram: Playgroup, Nursery, LKG and UKG at Palam Vihar Extn. and Rajendra Park. Admissions open for ${school.admissions.currentSession}.`;
+
+// Demo build: keep search engines out until the school approves the content.
+const isDemo = school._meta.status === 'demo-draft';
+
+const nav = [
+  { id: 'events', label: 'Events', href: url('events/') },
+  { id: 'admissions', label: 'Admissions', href: url('admissions/') },
+  { id: 'contact', label: 'Contact', href: url('contact/') },
+];
+const phone = primaryBranch.phones[0];
+const waText = `Hello, I'd like to know about admissions at ${name}.`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    {isDemo && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="min-h-dvh flex flex-col pb-[4.5rem] md:pb-0">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 btn">Skip to content</a>
+
+    <header class="relative z-20">
+      <div class="wrap flex items-center justify-between gap-4 py-4">
+        <a href={url()} class="flex items-center gap-2.5 rounded-lg" aria-label={`${name} home`}>
+          <RainbowMark size={46} stroke={4} />
+          <span class="font-display font-extrabold text-[1.35rem] leading-none">
+            Rainbow Kidz<span class="block text-sm font-semibold text-ink-soft tracking-normal">Pre School, Gurugram</span>
+          </span>
+        </a>
+        <nav aria-label="Main" class="hidden md:flex items-center gap-1">
+          {nav.map((n) => (
+            <a href={n.href} aria-current={current === n.id ? 'page' : undefined}
+               class="px-4 py-2 rounded-full font-display font-semibold text-lg hover:bg-chalk aria-[current=page]:bg-chalk">{n.label}</a>
+          ))}
+          <a href={telHref(phone)} class="btn ml-3" style="--tone:#1e2a5a;--tone-ink:#0f173a">Call {phone.replace('+91 ', '')}</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="mt-auto bg-ink text-white">
+      <div class="flex h-2" aria-hidden="true">
+        {toneOrder.map((t) => <span class="flex-1" style={`background:${hex(t)}`}></span>)}
+      </div>
+      <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p class="font-display font-extrabold text-3xl">Rainbow Kidz Pre School</p>
+          <p class="mt-2 text-white/75 measure">{school.school.taglines[0]}</p>
+          <p class="mt-6 text-white/75">
+            <a class="underline underline-offset-4 hover:text-white" href={`mailto:${school.school.email}`}>{school.school.email}</a>
+          </p>
+          <p class="mt-1 text-white/75">
+            <a class="underline underline-offset-4 hover:text-white" href={school.school.instagram} rel="noopener">Instagram: @rainbowkidzpreschool</a>
+          </p>
+        </div>
+        {school.branches.map((b) => (
+          <div>
+            <p class="font-display font-bold text-xl">{b.name}</p>
+            <ul class="mt-2 space-y-1 text-white/75">
+              {b.phones.map((p) => <li><a class="hover:text-white" href={telHref(p)}>{p}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="wrap pb-8 text-sm text-white/55">
+        © {new Date().getFullYear()} Rainbow Kidz Pre School. Photos from the school's Instagram.
+      </p>
+    </footer>
+
+    <!-- Phone action bar: parents mostly arrive from Instagram on mobile -->
+    <nav aria-label="Quick contact" class="md:hidden fixed inset-x-0 bottom-0 z-30 bg-white/95 backdrop-blur border-t-2 border-chalk">
+      <div class="grid grid-cols-3 gap-2 px-3 py-2.5">
+        <a href={telHref(phone)} class="btn !text-base !px-2" style="--tone:#1e2a5a;--tone-ink:#0f173a">Call</a>
+        <a href={waHref(phone, waText)} class="btn !text-base !px-2" style="--tone:#16a34a;--tone-ink:#166534" rel="noopener">WhatsApp</a>
+        <a href={url('admissions/#enquire')} class="btn !text-base !px-2" style="--tone:#a855f7;--tone-ink:#6b21a8">Enquire</a>
+      </div>
+    </nav>
+  </body>
+</html>
