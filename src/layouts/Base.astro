@@ -2,7 +2,8 @@
 import '../styles/global.css';
 import { Image } from 'astro:assets';
 import SocialLinks from '../components/SocialLinks.astro';
-import { school, url, img, primaryBranch, telHref, waHref, toneOrder, hex } from '../lib/data';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import { school, url, img, primaryBranch, telHref, waHref, toneOrder, hex, tone } from '../lib/data';
 
 const logo = img(school.school.logo);
 
@@ -26,14 +27,18 @@ const phone = primaryBranch.phones[0];
 const waText = `Hello, I'd like to know about admissions at ${name}.`;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="indigo">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
     {isDemo && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#eef0ff" />
+    <!-- Apply the visitor's saved colour before first paint (no flash). Default: indigo. -->
+    <script is:inline>
+      try { var t = localStorage.getItem('rk-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
     <link rel="icon" type="image/png" href={url('favicon.png')} />
     <link rel="apple-touch-icon" href={url('favicon.png')} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
@@ -45,10 +50,10 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 btn">Skip to content</a>
 
     <header class="relative z-20">
-      <div class="wrap flex items-center justify-between gap-4 py-4">
-        <a href={url()} class="flex items-center gap-2.5 rounded-lg" aria-label={`${name} home`}>
+      <div class="wrap flex items-center gap-3 py-4">
+        <a href={url()} class="mr-auto flex items-center gap-2.5 rounded-lg" aria-label={`${name} home`}>
           <Image src={logo} alt="" width={52} height={52} densities={[1, 2]} loading="eager" class="w-[52px] h-[52px] rounded-full" />
-          <span class="font-display font-extrabold text-[1.35rem] leading-none">
+          <span class="wordmark font-display font-extrabold text-[1.35rem] leading-none">
             Rainbow Kidz<span class="block text-sm font-semibold text-ink-soft tracking-normal">Pre School, Gurugram</span>
           </span>
         </a>
@@ -57,8 +62,9 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
             <a href={n.href} aria-current={current === n.id ? 'page' : undefined}
                class="px-4 py-2 rounded-full font-display font-semibold text-lg hover:bg-chalk aria-[current=page]:bg-chalk">{n.label}</a>
           ))}
-          <a href={telHref(phone)} class="btn ml-3" style="--tone:#1e2a5a;--tone-ink:#0f173a">Call {phone.replace('+91 ', '')}</a>
+          <a href={telHref(phone)} class="btn ml-2 hidden lg:inline-flex" style={tone('theme')}>Call {phone.replace('+91 ', '')}</a>
         </nav>
+        <ThemeSwitcher />
       </div>
     </header>
 
@@ -66,7 +72,7 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
       <slot />
     </main>
 
-    <footer class="mt-auto bg-ink text-white">
+    <footer class="mt-auto bg-ink text-white transition-colors duration-400">
       <div class="flex h-2" aria-hidden="true">
         {toneOrder.map((t) => <span class="flex-1" style={`background:${hex(t)}`}></span>)}
       </div>
@@ -95,10 +101,13 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
     <!-- Phone action bar: parents mostly arrive from Instagram on mobile -->
     <nav aria-label="Quick contact" class="md:hidden fixed inset-x-0 bottom-0 z-30 bg-white/95 backdrop-blur border-t-2 border-chalk">
       <div class="grid grid-cols-3 gap-2 px-3 py-2.5">
-        <a href={telHref(phone)} class="btn !text-base !px-2" style="--tone:#1e2a5a;--tone-ink:#0f173a">Call</a>
+        <a href={telHref(phone)} class="btn !text-base !px-2" style="--tone:var(--color-ink);--tone-ink:#000;--tone-on:#fff">Call</a>
         <a href={waHref(phone, waText)} class="btn !text-base !px-2" style="--tone:#16a34a;--tone-ink:#166534" rel="noopener">WhatsApp</a>
-        <a href={url('admissions/#enquire')} class="btn !text-base !px-2" style="--tone:#a855f7;--tone-ink:#6b21a8">Enquire</a>
+        <a href={url('admissions/#enquire')} class="btn !text-base !px-2" style={tone('theme')}>Enquire</a>
       </div>
     </nav>
+    <style>
+      @media (max-width: 420px) { .wordmark { display: none; } }
+    </style>
   </body>
 </html>

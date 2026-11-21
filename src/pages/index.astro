@@ -36,7 +36,7 @@ const phone = primaryBranch.phones[0];
           Gurugram’s youngest learners, from Playgroup to UKG, at Palam Vihar Extn. and Rajendra Park.
         </p>
         <div class="mt-9 flex flex-wrap gap-4">
-          <a class="btn" style={tone('violet')} href={url('admissions/#enquire')}>Book a school visit</a>
+          <a class="btn" style={tone('theme')} href={url('admissions/#enquire')}>Book a school visit</a>
           <a class="btn btn-quiet" href={telHref(phone)}>Call {phone.replace('+91 ', '')}</a>
         </div>
       </div>
@@ -62,7 +62,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- WHY: red -->
-  <section class="band" style={tone('red')}>
+  <section class="band" style={tone('theme')}>
     <div class="wrap grid gap-12 md:grid-cols-2 md:gap-16">
       <div>
         <h2>Why parents choose Rainbow Kidz</h2>
@@ -82,7 +82,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- PROGRAMS: orange, one rainbow tone per class -->
-  <section class="band tone-soft-bg" style={tone('orange')} id="programs">
+  <section class="band tone-soft-bg" style={tone('theme')} id="programs">
     <div class="wrap">
       <h2>Classes from Playgroup to UKG</h2>
       <div class="mt-10" data-tabs>
@@ -109,7 +109,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- YEAR: yellow, events laid out in school-year order -->
-  <section class="band" style={tone('yellow')} id="year">
+  <section class="band" style={tone('theme')} id="year">
     <div class="wrap flex flex-wrap items-end justify-between gap-6">
       <div>
         <h2>A year at Rainbow Kidz</h2>
@@ -134,12 +134,12 @@ const phone = primaryBranch.phones[0];
       ))}
     </ol>
     <div class="wrap mt-10">
-      <a class="btn" style={tone('yellow') + 'color:#1e2a5a'} href={url('events/')}>See every event</a>
+      <a class="btn" style={tone('theme')} href={url('events/')}>See every event</a>
     </div>
   </section>
 
   <!-- LEARNING: green -->
-  <section class="band tone-soft-bg" style={tone('green')}>
+  <section class="band tone-soft-bg" style={tone('theme')}>
     <div class="wrap grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-center">
       <div>
         <h2>Learning through play</h2>
@@ -152,7 +152,7 @@ const phone = primaryBranch.phones[0];
         </ul>
       </div>
       <div class="rounded-[28px] bg-white p-6 md:p-8">
-        <div class="pin tilt-r aspect-[4/3]" style={tone('green')}>
+        <div class="pin tilt-r aspect-[4/3]" style={tone('theme')}>
           <Photo src={school.summerCamp.image} alt="Children at the summer camp space workshop" sizes="(min-width: 768px) 30rem, 90vw" />
         </div>
         <h3 class="mt-7">Summer camp</h3>
@@ -162,7 +162,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- SAFETY: blue -->
-  <section class="band" style={tone('blue')}>
+  <section class="band" style={tone('theme')}>
     <div class="wrap">
       <h2 class="measure">Safe, seen and cared for</h2>
       <div class="mt-10 grid gap-6 md:grid-cols-3">
@@ -183,7 +183,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- PARENTS: indigo, Headspace-style floating blobs around the heading -->
-  <section class="band tone-soft-bg relative overflow-hidden" style={tone('indigo')}>
+  <section class="band tone-soft-bg relative overflow-hidden" style={tone('theme')}>
     <div aria-hidden="true">
       {['red', 'yellow', 'green', 'violet', 'orange'].map((t, i) => (
         <span class="blob" style={`background:${hex(t)};--x:${[6, 88, 14, 80, 50][i]}%;--y:${[14, 10, 70, 62, 4][i]}%;--s:${[64, 44, 36, 58, 28][i]}px`}></span>
@@ -207,7 +207,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- VISIT: violet. Branch cards drive the live map -->
-  <section class="band" style={tone('violet')} id="visit">
+  <section class="band" style={tone('theme')} id="visit">
     <div class="wrap">
       <h2>Come and see us</h2>
       <p class="mt-4 measure text-xl text-ink-soft">Two branches in Gurugram, both rated by parents on Google. Pick a branch to see it on the map.</p>
@@ -216,7 +216,7 @@ const phone = primaryBranch.phones[0];
   </section>
 
   <!-- SOCIAL: four real channels -->
-  <section class="band tone-soft-bg" style={tone('indigo')} id="follow">
+  <section class="band tone-soft-bg" style={tone('theme')} id="follow">
     <div class="wrap">
       <h2>Follow our days</h2>
       <p class="mt-4 measure text-xl text-ink-soft">New photos and videos go up on Instagram almost every week. Message us on WhatsApp any time.</p>

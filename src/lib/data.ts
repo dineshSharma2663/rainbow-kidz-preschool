@@ -21,9 +21,12 @@ export const url = (path = '') => `${base}/${path.replace(/^\//, '')}`;
 /* ---------- rainbow tones ---------- */
 const rainbow = Object.fromEntries(data.theme.rainbow.map((c) => [c.id, c]));
 export const toneOrder: ToneId[] = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+/** tone('theme') follows the visitor's chosen colour; any rainbow id gives that fixed colour. */
+const DARK_ON = new Set(['yellow']);
 export const tone = (id: string) => {
+  if (id === 'theme') return '--tone:var(--accent);--tone-soft:var(--tint);--tone-ink:var(--accent-ink);--tone-on:var(--on);';
   const c = rainbow[id] ?? rainbow.blue;
-  return `--tone:${c.base};--tone-soft:${c.soft};--tone-ink:${c.ink};`;
+  return `--tone:${c.base};--tone-soft:${c.soft};--tone-ink:${c.ink};--tone-on:${DARK_ON.has(id) ? '#1e2a5a' : '#fff'};`;
 };
 export const hex = (id: string) => (rainbow[id] ?? rainbow.blue).base;
 
