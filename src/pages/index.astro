@@ -235,7 +235,9 @@ const phone = primaryBranch.phones[0];
   .placards { display: grid; grid-template-columns: repeat(3, 30%); justify-content: space-between; align-items: start; }
   .placards .is-centre { translate: 0 -32.5%; }  /* 13 units up into the hollow */
   .placards .is-side { translate: 0 6%; }        /* clear of the band feet and round caps */
-  .placard { animation: pop .6s cubic-bezier(.3, 1.4, .5, 1) both; animation-delay: var(--d); }
+  /* Placards pop up after the arcs draw, each time the rainbow plays */
+  :global(.motion) .placard { opacity: 0; }
+  :global(.motion) .play .placard { opacity: 1; animation: pop .6s cubic-bezier(.3, 1.4, .5, 1) both; animation-delay: var(--d); }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
   @keyframes pop { from { opacity: 0; transform: translateY(40px) scale(.9); } }
 
@@ -291,6 +293,18 @@ const phone = primaryBranch.phones[0];
       });
     });
   });
+
+  // Rainbow draws when it scrolls into view; resets once fully off screen so it draws again on return
+  const art = document.querySelector<HTMLElement>('.hero-art');
+  if (art) {
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio >= 0.35) art.classList.add('play');
+        else if (!e.isIntersecting) art.classList.remove('play');
+      },
+      { threshold: [0, 0.35] },
+    ).observe(art);
+  }
 
   // Event strip arrows
   const track = document.querySelector<HTMLElement>('[data-strip-track]');

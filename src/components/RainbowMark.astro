@@ -29,18 +29,16 @@ const uid = `arc-${Math.random().toString(36).slice(2, 8)}`;
 </svg>
 
 <style>
-  .arc-draw path[style] {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+  /* Draw-on-view: the arcs wait undrawn until an ancestor gets .play (added when the
+     rainbow scrolls into view, removed when it fully leaves, so it redraws on return).
+     Only when motion is allowed (html.motion); otherwise the rainbow is simply shown. */
+  :global(.motion) .arc-draw path[style] { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  :global(.motion) .arc-draw .arc-label { opacity: 0; }
+  :global(.motion .play) .arc-draw path[style] {
     animation: draw 1.1s cubic-bezier(.6, .1, .2, 1) forwards;
     animation-delay: calc(var(--i) * 110ms);
   }
+  :global(.motion .play) .arc-draw .arc-label { animation: label-in .6s ease forwards 1s; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
-  .arc-label { font-family: var(--font-display); font-weight: 800; font-size: 6.4px; letter-spacing: .06em; fill: var(--color-ink); }
-  .arc-draw .arc-label { opacity: 0; animation: label-in .6s ease forwards 1s; }
   @keyframes label-in { from { opacity: 0; } to { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .arc-draw path[style] { stroke-dashoffset: 0; animation: none; }
-    .arc-draw .arc-label { opacity: 1; animation: none; }
-  }
 </style>
