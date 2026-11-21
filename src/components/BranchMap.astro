@@ -114,6 +114,7 @@ const branches = school.branches.map((b) => ({ ...b, embed: embed(b.mapQuery ?? 
       });
     });
     placePill(0);
+    document.fonts.ready.then(() => placePill(current)); // re-measure once web fonts load (tab width changes)
     addEventListener('resize', () => placePill(current));
   });
 </script>
