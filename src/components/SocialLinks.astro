@@ -11,8 +11,8 @@ const ext = (u: string) => (u.startsWith('http') ? { target: '_blank', rel: 'noo
 ---
 {variant === 'tiles' ? (
   <ul class="tiles" role="list">
-    {links.map((s) => (
-      <li>
+    {links.map((s, i) => (
+      <li data-reveal style={`--rd:${i * 90}ms`}>
         <a href={s.url} {...ext(s.url!)} class="tile" style={`--brand:${s.color}`}>
           <span class="badge" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="30" height="30"><path d={icons[s.id]} fill="currentColor" /></svg>

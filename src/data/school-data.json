@@ -55,7 +55,7 @@
   "branches": [
     {
       "id": "palam-vihar",
-      "name": "Palam Vihar Extn.",
+      "name": "Dharam Colony, Palam Vihar Extn.",
       "phones": [
         "+91 98109 46354",
         "+91 98104 16354"
@@ -69,7 +69,9 @@
         "rating": 4.9,
         "reviews": 60,
         "checked": "2026-11-21"
-      }
+      },
+      "shortName": "Dharam Colony",
+      "area": "Palam Vihar Extn."
     },
     {
       "id": "rajendra-park",
@@ -87,7 +89,9 @@
         "rating": 5.0,
         "reviews": 56,
         "checked": "2026-11-21"
-      }
+      },
+      "shortName": "Rajendra Park",
+      "area": "Sector 105"
     }
   ],
   "programs": [

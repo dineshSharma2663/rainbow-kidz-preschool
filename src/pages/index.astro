@@ -28,12 +28,12 @@ const phone = primaryBranch.phones[0];
   <!-- HERO: the one orchestrated moment. Arc draws, then the children's placards rise. -->
   <section class="relative overflow-hidden">
     <div class="wrap grid items-center gap-10 pt-6 pb-16 md:grid-cols-[1.05fr_1fr] md:pt-10 md:pb-24">
-      <div class="hero-copy">
+      <div class="hero-copy" data-parallax="0.16" data-parallax-mode="hero">
         <p class="font-display font-semibold text-xl text-ink-soft">Admissions open for {school.admissions.currentSession}</p>
         <h1 class="mt-3">Dear Mumma and Papa, don’t worry too much.</h1>
-        <p class="mt-6 measure text-xl text-ink-soft">
+        <p class="mt-6 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">
           Our children wrote that for you. For more than 15 years, Rainbow Kidz has been the first school for
-          Gurugram’s youngest learners, from Playgroup to UKG, at Palam Vihar Extn. and Rajendra Park.
+          Gurugram’s youngest learners, from Playgroup to UKG, at Dharam Colony (Palam Vihar Extn.) and Rajendra Park.
         </p>
         <div class="mt-9 flex flex-wrap gap-4">
           <a class="btn" style={tone('theme')} href={url('admissions/#enquire')}>Book a school visit</a>
@@ -47,7 +47,7 @@ const phone = primaryBranch.phones[0];
         Side placards sit below the feet; the centre one rises into the hollow,
         13 units up, while the inner band at x=35..65 is ~16.5 units up.
       -->
-      <div class="hero-art relative mx-auto w-full max-w-[34rem]" aria-label="Messages from our children">
+      <div class="hero-art relative mx-auto w-full max-w-[34rem]" data-parallax="0.06" data-parallax-mode="hero" aria-label="Messages from our children">
         <RainbowMark size={540} stroke={3.2} animate label="Rainbow Kidz Pre School" class="block w-full h-auto overflow-visible" />
         <div class="placards">
           {placards.map((p, i) => (
@@ -65,15 +65,15 @@ const phone = primaryBranch.phones[0];
   <section class="band" style={tone('theme')}>
     <div class="wrap grid gap-12 md:grid-cols-2 md:gap-16">
       <div>
-        <h2>Why parents choose Rainbow Kidz</h2>
-        <p class="mt-6 measure text-xl text-ink-soft">
+        <h2 data-reveal>Why parents choose Rainbow Kidz</h2>
+        <p class="mt-6 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">
           Ask our parents and you hear the same three things. Teachers pick up the phone. Children change
           visibly within a year. And every festival feels like a family occasion.
         </p>
       </div>
       <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2 self-center">
         {school.highlights.map((h, i) => (
-          <li class="flex items-center gap-3 font-display font-semibold text-xl" style={tone(toneOrder[i % 7])}>
+          <li class="flex items-center gap-3 font-display font-semibold text-xl" style={`${tone(toneOrder[i % 7])}--rd:${i * 70}ms`} data-reveal>
             <span class="dot !w-4 !h-4"></span>{h.title}
           </li>
         ))}
@@ -84,8 +84,8 @@ const phone = primaryBranch.phones[0];
   <!-- PROGRAMS: orange, one rainbow tone per class -->
   <section class="band tone-soft-bg" style={tone('theme')} id="programs">
     <div class="wrap">
-      <h2>Classes from Playgroup to UKG</h2>
-      <div class="mt-10" data-tabs>
+      <h2 data-reveal>Classes from Playgroup to UKG</h2>
+      <div class="mt-10" data-tabs data-reveal style="--rd:120ms">
         <div role="tablist" aria-label="Classes" class="flex flex-wrap gap-3">
           {school.programs.map((p, i) => (
             <button role="tab" id={`tab-${p.id}`} aria-controls={`panel-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'}
@@ -112,15 +112,15 @@ const phone = primaryBranch.phones[0];
   <section class="band" style={tone('theme')} id="year">
     <div class="wrap flex flex-wrap items-end justify-between gap-6">
       <div>
-        <h2>A year at Rainbow Kidz</h2>
-        <p class="mt-4 measure text-xl text-ink-soft">From the first day in April to graduation in March: the moments our parents loved most.</p>
+        <h2 data-reveal>A year at Rainbow Kidz</h2>
+        <p class="mt-4 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">From the first day in April to graduation in March: the moments our parents loved most.</p>
       </div>
       <div class="flex gap-3">
         <button class="strip-btn" data-strip="-1" aria-label="Scroll back">‹</button>
         <button class="strip-btn" data-strip="1" aria-label="Scroll forward">›</button>
       </div>
     </div>
-    <ol class="strip mt-10" data-strip-track>
+    <ol class="strip mt-10" data-strip-track data-reveal="right">
       {eventsBySchoolYear.map((e, i) => (
         <li style={tone(e.color)}>
           <a href={url(`events/${e.id}/`)} class="group block">
@@ -141,9 +141,9 @@ const phone = primaryBranch.phones[0];
   <!-- LEARNING: green -->
   <section class="band tone-soft-bg" style={tone('theme')}>
     <div class="wrap grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-center">
-      <div>
-        <h2>Learning through play</h2>
-        <p class="mt-5 measure text-xl text-ink-soft">
+      <div data-reveal="left">
+        <h2 data-reveal>Learning through play</h2>
+        <p class="mt-5 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">
           Every week has a theme children can touch and say out loud: a colour day, a shape day, Hindi swar,
           a turn on the mic. Big ideas like safety and kindness come through stories and games.
         </p>
@@ -151,7 +151,7 @@ const phone = primaryBranch.phones[0];
           {school.learningActivities.map((a, i) => <li class="chip" style={tone(toneOrder[i % 7])}>{a}</li>)}
         </ul>
       </div>
-      <div class="rounded-[28px] bg-white p-6 md:p-8">
+      <div class="rounded-[28px] bg-white p-6 md:p-8" data-reveal="right" style="--rd:150ms">
         <div class="pin tilt-r aspect-[4/3]" style={tone('theme')}>
           <Photo src={school.summerCamp.image} alt="Children at the summer camp space workshop" sizes="(min-width: 768px) 30rem, 90vw" />
         </div>
@@ -164,15 +164,15 @@ const phone = primaryBranch.phones[0];
   <!-- SAFETY: blue -->
   <section class="band" style={tone('theme')}>
     <div class="wrap">
-      <h2 class="measure">Safe, seen and cared for</h2>
+      <h2 data-reveal class="measure">Safe, seen and cared for</h2>
       <div class="mt-10 grid gap-6 md:grid-cols-3">
-        {school.safety.programs.map((s) => (
-          <div class="rounded-[28px] p-8 tone-soft-bg">
+        {school.safety.programs.map((s, si) => (
+          <div class="rounded-[28px] p-8 tone-soft-bg" data-reveal style={`--rd:${si * 110}ms`}>
             <h3 class="tone-ink">{s.title}</h3>
             <p class="mt-3">{s.description}</p>
           </div>
         ))}
-        <div class="rounded-[28px] p-8 border-4" style="border-color:var(--tone-soft)">
+        <div class="rounded-[28px] p-8 border-4" style="border-color:var(--tone-soft);--rd:220ms" data-reveal>
           <h3 class="tone-ink">Around the campus</h3>
           <ul class="mt-3 space-y-1.5">
             {school.safety.facilities.map((f) => <li class="flex items-center gap-2.5"><span class="dot"></span>{f}</li>)}
@@ -186,14 +186,14 @@ const phone = primaryBranch.phones[0];
   <section class="band tone-soft-bg relative overflow-hidden" style={tone('theme')}>
     <div aria-hidden="true">
       {['red', 'yellow', 'green', 'violet', 'orange'].map((t, i) => (
-        <span class="blob" style={`background:${hex(t)};--x:${[6, 88, 14, 80, 50][i]}%;--y:${[14, 10, 70, 62, 4][i]}%;--s:${[64, 44, 36, 58, 28][i]}px`}></span>
+        <span class="blob" data-parallax={[-0.18, 0.12, 0.22, -0.1, 0.3][i]} style={`background:${hex(t)};--x:${[6, 88, 14, 80, 50][i]}%;--y:${[14, 10, 70, 62, 4][i]}%;--s:${[64, 44, 36, 58, 28][i]}px`}></span>
       ))}
     </div>
     <div class="wrap relative">
-      <h2 class="text-center">What parents say</h2>
+      <h2 data-reveal class="text-center">What parents say</h2>
       <div class="mt-12 grid gap-6 md:grid-cols-3">
         {school.testimonials.items.map((t, i) => (
-          <figure class="flex flex-col rounded-[28px] bg-white p-8" style={tone(quoteTones[i])}>
+          <figure class="flex flex-col rounded-[28px] bg-white p-8" style={`${tone(quoteTones[i])}--rd:${i * 120}ms`} data-reveal>
             <span class="font-display text-6xl leading-none tone-ink" aria-hidden="true">“</span>
             <blockquote class="font-display text-[1.4rem] font-semibold leading-snug">{t.featuredQuote}</blockquote>
             <figcaption class="mt-auto pt-6 text-ink-soft">
@@ -209,17 +209,17 @@ const phone = primaryBranch.phones[0];
   <!-- VISIT: violet. Branch cards drive the live map -->
   <section class="band" style={tone('theme')} id="visit">
     <div class="wrap">
-      <h2>Come and see us</h2>
-      <p class="mt-4 measure text-xl text-ink-soft">Two branches in Gurugram, both rated by parents on Google. Pick a branch to see it on the map.</p>
-      <div class="mt-10"><BranchMap /></div>
+      <h2 data-reveal>Come and see us</h2>
+      <p class="mt-4 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">Two branches in Gurugram, both rated by parents on Google. Pick a branch to see it on the map.</p>
+      <div class="mt-10" data-reveal style="--rd:120ms"><BranchMap /></div>
     </div>
   </section>
 
   <!-- SOCIAL: four real channels -->
   <section class="band tone-soft-bg" style={tone('theme')} id="follow">
     <div class="wrap">
-      <h2>Follow our days</h2>
-      <p class="mt-4 measure text-xl text-ink-soft">New photos and videos go up on Instagram almost every week. Message us on WhatsApp any time.</p>
+      <h2 data-reveal>Follow our days</h2>
+      <p class="mt-4 measure text-xl text-ink-soft" data-reveal style="--rd:90ms">New photos and videos go up on Instagram almost every week. Message us on WhatsApp any time.</p>
       <div class="mt-10"><SocialLinks /></div>
     </div>
   </section>
@@ -239,6 +239,9 @@ const phone = primaryBranch.phones[0];
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
   @keyframes pop { from { opacity: 0; transform: translateY(40px) scale(.9); } }
 
+  /* Switching class tabs slides the new panel in */
+  [role='tabpanel']:not([hidden]) { animation: panel-in .45s cubic-bezier(.2, .8, .2, 1); }
+  @keyframes panel-in { from { opacity: 0; translate: 24px 0; } }
   .prog-tab {
     display: inline-flex; align-items: center; gap: .55rem;
     padding: .65rem 1.3rem .55rem; border-radius: 999px; background: #fff;

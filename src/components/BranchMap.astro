@@ -1,62 +1,119 @@
 ---
 import { school, tone, telHref, waHref } from '../lib/data';
 
-/** Branch cards on one side, a live Google map on the other. Picking a card moves the map. */
+/** Branch switch (Dharam Colony first) driving one branch card and a crossfading Google map.
+ *  The second map only loads the first time it is chosen. */
 const embed = (q: string) => `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
-const branches = school.branches.map((b) => ({ ...b, tone: 'theme', embed: embed(b.mapQuery ?? `Rainbow Kidz Pre School ${b.name} Gurugram`) }));
+const branches = school.branches.map((b) => ({ ...b, embed: embed(b.mapQuery ?? `Rainbow Kidz Pre School ${b.name} Gurugram`) }));
 ---
-<div class="branch-map grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)]" data-branch-map>
-  <div class="grid gap-4 content-start" role="group" aria-label="Choose a branch">
+<div class="bm" data-branch-map style={tone('theme')}>
+  <div class="seg" role="tablist" aria-label="Choose a branch">
+    <span class="seg-pill" aria-hidden="true"></span>
     {branches.map((b, i) => (
-      <article class="branch tone-soft-bg" style={tone(b.tone)} data-branch={i} aria-current={i === 0 ? 'true' : undefined}>
-        <button type="button" class="branch-pick" data-pick={i} aria-pressed={i === 0 ? 'true' : 'false'}>
-          <span class="font-display font-bold text-2xl">{b.name}</span>
-          {b.googleRating && (
-            <span class="rating">★ {b.googleRating.rating.toFixed(1)} <span class="text-ink-soft font-normal">· {b.googleRating.reviews} Google reviews</span></span>
-          )}
-          <span class="block mt-2 text-ink-soft text-base">{b.address}</span>
-        </button>
-        <div class="mt-4 flex flex-wrap gap-2.5">
-          <a class="btn !text-base !py-2" style={tone(b.tone)} href={telHref(b.phones[0])}>Call</a>
-          <a class="btn !text-base !py-2" style="--tone:#16a34a;--tone-ink:#166534" href={waHref(b.phones[0], `Hello, I'd like to visit the ${b.name} branch.`)} target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn btn-quiet !text-base !py-2" href={b.mapUrl} target="_blank" rel="noopener">Directions</a>
-        </div>
-      </article>
+      <button type="button" role="tab" id={`bm-tab-${b.id}`} aria-controls={`bm-panel-${b.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-pick={i}>
+        <span class="font-display font-bold">{b.shortName ?? b.name}</span>
+        <span class="seg-sub">{b.area}</span>
+      </button>
     ))}
   </div>
 
-  <div class="map-frame">
-    <iframe
-      title={`Map: Rainbow Kidz ${branches[0].name}`}
-      src={branches[0].embed}
-      data-embeds={JSON.stringify(branches.map((b) => ({ src: b.embed, name: b.name })))}
-      loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] items-stretch">
+    <div class="cards">
+      {branches.map((b, i) => (
+        <article class="card tone-soft-bg" role="tabpanel" id={`bm-panel-${b.id}`} aria-labelledby={`bm-tab-${b.id}`}
+                 data-card={i} data-state={i === 0 ? 'on' : 'after'} inert={i !== 0}>
+          <h3 class="!text-3xl">{b.shortName ?? b.name}</h3>
+          <p class="text-ink-soft">{b.area}, Gurugram</p>
+          {b.googleRating && (
+            <p class="rating">★ {b.googleRating.rating.toFixed(1)} <span class="text-ink-soft font-normal">from {b.googleRating.reviews} Google reviews</span></p>
+          )}
+          <p class="mt-4 text-lg leading-snug">{b.address}</p>
+          <ul class="mt-4 space-y-0.5">
+            {b.phones.map((p) => <li><a class="font-semibold hover:underline" href={telHref(p)}>{p}</a></li>)}
+          </ul>
+          <div class="mt-6 flex flex-wrap gap-2.5">
+            <a class="btn !text-base !py-2" href={telHref(b.phones[0])}>Call</a>
+            <a class="btn !text-base !py-2" style="--tone:#16a34a;--tone-ink:#166534;--tone-on:#fff" href={waHref(b.phones[0], `Hello, I'd like to visit the ${b.shortName ?? b.name} branch.`)} target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn-quiet !text-base !py-2" href={b.mapUrl} target="_blank" rel="noopener">Directions</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="map-frame">
+      {branches.map((b, i) => (
+        <iframe title={`Map of Rainbow Kidz ${b.shortName ?? b.name}`} data-map={i} class:list={[i === 0 && 'on']}
+                src={i === 0 ? b.embed : undefined} data-src={b.embed}
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen tabindex={i === 0 ? 0 : -1}></iframe>
+      ))}
+    </div>
   </div>
 </div>
 
 <style>
-  .branch { border-radius: 26px; padding: 1.5rem; box-shadow: inset 0 0 0 3px transparent; transition: box-shadow .2s ease; }
-  .branch[aria-current='true'] { box-shadow: inset 0 0 0 3px var(--tone); }
-  .branch-pick { display: block; width: 100%; text-align: left; cursor: pointer; }
-  .rating { display: block; margin-top: .2rem; font-weight: 600; color: #a16207; }
-  .map-frame { min-height: 22rem; border-radius: 28px; overflow: hidden; border: 6px solid #fff; box-shadow: 0 14px 30px -18px rgb(30 42 90 / .5); background: #e8edf5; }
-  .map-frame iframe { width: 100%; height: 100%; min-height: 22rem; border: 0; display: block; }
+  /* Segmented switch with a sliding pill */
+  .seg { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: .35rem; border-radius: 999px; background: var(--tone-soft); max-width: 100%; }
+  .seg button { position: relative; z-index: 1; padding: .55rem 1.4rem .5rem; border-radius: 999px; text-align: center; line-height: 1.15; transition: color .3s ease; }
+  .seg button > span:first-child { display: block; font-size: 1.15rem; }
+  .seg-sub { display: block; font-size: .85rem; opacity: .75; }
+  .seg button[aria-selected='true'] { color: var(--tone-on); }
+  .seg-pill { position: absolute; top: .35rem; bottom: .35rem; left: .35rem; width: var(--w, 50%); border-radius: 999px; background: var(--tone); box-shadow: 0 3px 0 var(--tone-ink);
+    transform: translateX(var(--x, 0)); transition: transform .45s cubic-bezier(.3, 1.3, .5, 1), width .3s ease, background-color .4s ease; }
+
+  /* Branch cards stack in one cell and slide between states */
+  .cards { display: grid; overflow: clip; border-radius: 28px; } /* waiting card sits 36px aside; keep it inside */
+  .card { grid-area: 1 / 1; border-radius: 28px; padding: 1.75rem; transition: opacity .45s ease, transform .55s cubic-bezier(.2, .8, .2, 1), background-color .4s ease; }
+  .card[data-state='on'] { opacity: 1; transform: none; }
+  .card[data-state='before'] { opacity: 0; transform: translateX(-36px); pointer-events: none; }
+  .card[data-state='after'] { opacity: 0; transform: translateX(36px); pointer-events: none; }
+  .rating { margin-top: .35rem; font-weight: 600; color: #a16207; }
+
+  /* Two map layers crossfade */
+  .map-frame { position: relative; min-height: 24rem; border-radius: 28px; overflow: hidden; border: 6px solid #fff; box-shadow: 0 14px 30px -18px rgb(30 42 90 / .5); background: var(--tone-soft); }
+  .map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .6s ease; }
+  .map-frame iframe.on { opacity: 1; }
+
+  @media (max-width: 480px) {
+    .seg { display: grid; width: 100%; }
+    .seg button { padding-inline: .6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .seg-pill, .card, .map-frame iframe { transition: none; } }
 </style>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-branch-map]').forEach((root) => {
-    const frame = root.querySelector<HTMLIFrameElement>('iframe')!;
-    const embeds: { src: string; name: string }[] = JSON.parse(frame.dataset.embeds!);
-    const cards = [...root.querySelectorAll<HTMLElement>('[data-branch]')];
-    root.querySelectorAll<HTMLButtonElement>('[data-pick]').forEach((btn) =>
-      btn.addEventListener('click', () => {
-        const i = Number(btn.dataset.pick);
-        cards.forEach((c, k) => {
-          k === i ? c.setAttribute('aria-current', 'true') : c.removeAttribute('aria-current');
-          c.querySelector('[data-pick]')!.setAttribute('aria-pressed', String(k === i));
-        });
-        if (frame.src !== embeds[i].src) { frame.src = embeds[i].src; frame.title = `Map: Rainbow Kidz ${embeds[i].name}`; }
-      }),
-    );
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-pick]')];
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-card]')];
+    const maps = [...root.querySelectorAll<HTMLIFrameElement>('[data-map]')];
+    const pill = root.querySelector<HTMLElement>('.seg-pill')!;
+    let current = 0;
+
+    const placePill = (i: number) => {
+      const t = tabs[i];
+      pill.style.setProperty('--x', `${t.offsetLeft - pill.offsetLeft}px`);
+      pill.style.setProperty('--w', `${t.offsetWidth}px`);
+    };
+    const select = (i: number) => {
+      if (i === current) return;
+      tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+      cards.forEach((c, k) => { c.dataset.state = k === i ? 'on' : k < i ? 'before' : 'after'; c.inert = k !== i; });
+      const m = maps[i];
+      if (!m.getAttribute('src')) m.src = m.dataset.src!; // load lazily on first use
+      maps.forEach((f, k) => { f.classList.toggle('on', k === i); f.tabIndex = k === i ? 0 : -1; });
+      placePill(i);
+      current = i;
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        const n = (i + d + tabs.length) % tabs.length;
+        tabs[n].focus(); select(n);
+      });
+    });
+    placePill(0);
+    addEventListener('resize', () => placePill(current));
   });
 </script>

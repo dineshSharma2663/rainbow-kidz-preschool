@@ -4,6 +4,7 @@ import { toneOrder, hex } from '../lib/data';
 const label = (t: string) => t[0].toUpperCase() + t.slice(1);
 ---
 <div class="switcher" role="radiogroup" aria-label="Website colour">
+  <span class="indicator" aria-hidden="true"></span>
   {toneOrder.map((t) => (
     <button type="button" role="radio" aria-checked="false" data-set-theme={t}
             aria-label={label(t)} title={label(t)} style={`--c:${hex(t)}`}></button>
@@ -11,18 +12,28 @@ const label = (t: string) => t[0].toUpperCase() + t.slice(1);
 </div>
 
 <style>
-  .switcher { display: flex; align-items: center; gap: .4rem; padding: .35rem .5rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px oklch(.88 .03 var(--h)); }
-  .switcher button {
-    width: 1.35rem; height: 1.35rem; border-radius: 999px; background: var(--c);
+  /* Each colour owns a fixed slot; the dot sits inside it with room to spare.
+     The selection ring is ONE element that slides between slots and is drawn
+     inside the slot, so it can never paint over a neighbour. */
+  .switcher { --slot: 1.9rem; --dot: 1.2rem; position: relative; display: flex; align-items: center; padding: .2rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px oklch(.88 .03 var(--h)); }
+  .switcher button { position: relative; z-index: 1; display: grid; place-items: center; width: var(--slot); height: var(--slot); border-radius: 999px; }
+  .switcher button::before {
+    content: ''; width: var(--dot); height: var(--dot); border-radius: 999px; background: var(--c);
     box-shadow: inset 0 -3px 0 rgb(0 0 0 / .18);
-    transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s ease;
+    transition: transform .2s cubic-bezier(.3, 1.6, .5, 1);
   }
-  .switcher button:hover { transform: scale(1.18); }
-  .switcher button[aria-checked='true'] { transform: scale(1.25); box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px var(--ink); }
-  @media (max-width: 420px) {
-    .switcher { gap: .3rem; padding: .3rem .4rem; }
-    .switcher button { width: 1.15rem; height: 1.15rem; }
+  .switcher button:hover::before { transform: scale(1.15); }        /* 1.2rem x 1.15 still fits the 1.9rem slot */
+  .switcher button[aria-checked='true']::before { transform: scale(1.08); }
+  .indicator {
+    position: absolute; top: .2rem; left: .2rem; width: var(--slot); height: var(--slot); border-radius: 999px;
+    box-shadow: inset 0 0 0 2.5px var(--ink); pointer-events: none;
+    transform: translateX(calc(var(--i, 0) * var(--slot))); opacity: 0; /* by slot index: stays aligned at every screen size */
+    transition: transform .38s cubic-bezier(.3, 1.35, .5, 1), opacity .2s ease;
   }
+  .switcher.ready .indicator { opacity: 1; }
+  @media (max-width: 420px) { .switcher { --slot: 1.62rem; --dot: 1.02rem; } }
+  @media (max-width: 360px) { .switcher { --slot: 1.45rem; --dot: .95rem; } }
+  @media (prefers-reduced-motion: reduce) { .indicator { transition: none; } }
 </style>
 
 <script>
@@ -34,6 +45,16 @@ const label = (t: string) => t[0].toUpperCase() + t.slice(1);
       const on = b.dataset.setTheme === now;
       b.setAttribute('aria-checked', String(on));
       b.tabIndex = on ? 0 : -1;
+      if (on) {
+        // slide the ring to the chosen slot
+        const wrap = b.parentElement!;
+        const ind = wrap.querySelector<HTMLElement>('.indicator')!;
+        const first = !wrap.classList.contains('ready');
+        if (first) ind.style.transition = 'none'; // land in place on page load, slide only on user picks
+        ind.style.setProperty('--i', String(buttons.indexOf(b)));
+        wrap.classList.add('ready');
+        if (first) requestAnimationFrame(() => requestAnimationFrame(() => (ind.style.transition = '')));
+      }
     });
     const bg = getComputedStyle(document.documentElement).getPropertyValue('--tint').trim();
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
