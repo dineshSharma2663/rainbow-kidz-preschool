@@ -35,7 +35,7 @@ const phone = primaryBranch.phones[0];
           Our children wrote that for you. For more than 15 years, Rainbow Kidz has been the first school for
           Gurugram’s youngest learners, from Playgroup to UKG, at Dharam Colony (Palam Vihar Extn.) and Rajendra Park.
         </p>
-        <div class="mt-9 flex flex-wrap gap-4">
+        <div class="hero-ctas mt-9 flex flex-wrap gap-4">
           <a class="btn" style={tone('theme')} href={url('admissions/#enquire')}>Book a school visit</a>
           <a class="btn btn-quiet" href={telHref(phone)}>Call {phone.replace('+91 ', '')}</a>
         </div>
@@ -232,6 +232,12 @@ const phone = primaryBranch.phones[0];
   .hero-copy > :nth-child(4) { animation-delay: 240ms; }
   /* Three 30%-wide columns with 5% gaps: x 0-30, 35-65, 70-100 of the arc's width.
      Placards are 40% of the width tall, so translate % = units / 40. */
+  /* Phones: keep both hero buttons on one row (saves ~70px so the rainbow shows on load).
+     Text and padding scale with the screen; desktop sizes are untouched. */
+  @media (max-width: 559px) {
+    .hero-ctas { flex-wrap: nowrap; gap: .6rem; }
+    .hero-ctas .btn { flex: 1 1 auto; white-space: nowrap; font-size: clamp(.8rem, 4.1vw, 1.05rem); padding: .65rem clamp(.55rem, 3vw, 1.1rem) .55rem; }
+  }
   .placards { display: grid; grid-template-columns: repeat(3, 30%); justify-content: space-between; align-items: start; }
   .placards .is-centre { translate: 0 -32.5%; }  /* 13 units up into the hollow */
   .placards .is-side { translate: 0 6%; }        /* clear of the band feet and round caps */
