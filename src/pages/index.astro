@@ -39,13 +39,19 @@ const phone = primaryBranch.phones[0];
         </div>
       </div>
 
-      <div class="relative mx-auto w-full max-w-[34rem]" aria-label="Messages from our children">
-        <RainbowMark size={540} stroke={4.2} animate class="w-full h-auto" />
-        <div class="absolute inset-x-0 bottom-[-12%] grid grid-cols-3 gap-3 px-[4%]">
+      <!--
+        The rainbow arches over the children; no photo touches a band.
+        Geometry (viewBox 100 x 52, baseline y=50): bands r=46 down to ~22 inner edge.
+        Side placards sit below the feet; the centre one rises into the hollow,
+        13 units up, while the inner band at x=35..65 is ~16.5 units up.
+      -->
+      <div class="hero-art relative mx-auto w-full max-w-[34rem]" aria-label="Messages from our children">
+        <RainbowMark size={540} stroke={3.2} animate class="block w-full h-auto" />
+        <div class="placards">
           {placards.map((p, i) => (
-            <figure class:list={['pin placard aspect-[3/4]', i === 1 ? '-translate-y-[18%]' : i === 0 ? 'tilt-l' : 'tilt-r']}
+            <figure class:list={['pin placard aspect-[3/4]', i === 1 ? 'is-centre' : i === 0 ? 'is-side tilt-l' : 'is-side tilt-r']}
                     style={`${tone(p.t)}--d:${1200 + i * 160}ms`}>
-              <Photo src={p.src} alt={p.alt} sizes="(min-width: 768px) 12rem, 30vw" eager />
+              <Photo src={p.src} alt={p.alt} sizes="(min-width: 768px) 11rem, 30vw" eager />
             </figure>
           ))}
         </div>
@@ -226,6 +232,11 @@ const phone = primaryBranch.phones[0];
   .hero-copy > :nth-child(2) { animation-delay: 80ms; }
   .hero-copy > :nth-child(3) { animation-delay: 160ms; }
   .hero-copy > :nth-child(4) { animation-delay: 240ms; }
+  /* Three 30%-wide columns with 5% gaps: x 0-30, 35-65, 70-100 of the arc's width.
+     Placards are 40% of the width tall, so translate % = units / 40. */
+  .placards { display: grid; grid-template-columns: repeat(3, 30%); justify-content: space-between; align-items: start; }
+  .placards .is-centre { translate: 0 -32.5%; }  /* 13 units up into the hollow */
+  .placards .is-side { translate: 0 6%; }        /* clear of the band feet and round caps */
   .placard { animation: pop .6s cubic-bezier(.3, 1.4, .5, 1) both; animation-delay: var(--d); }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
   @keyframes pop { from { opacity: 0; transform: translateY(40px) scale(.9); } }
