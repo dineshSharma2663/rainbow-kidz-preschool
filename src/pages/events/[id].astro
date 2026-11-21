@@ -86,6 +86,9 @@ const { event: e, prev, next } = Astro.props;
   const show = (i: number) => {
     at = (i + slides.length) % slides.length;
     slides.forEach((s, k) => (s.hidden = k !== at));
+    // Lazy images inside a closed dialog never enter the viewport, so load on demand
+    // (the current photo plus the next one, so stepping forward feels instant).
+    [at, (at + 1) % slides.length].forEach((k) => slides[k].querySelectorAll('img').forEach((im) => (im.loading = 'eager')));
     count.textContent = `${at + 1} / ${slides.length}`;
   };
   document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
