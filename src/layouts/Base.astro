@@ -175,9 +175,17 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
           for (const el of items) {
             const speed = Number(el.dataset.parallax);
             if (el.dataset.parallaxMode === 'hero') {
-              const y = Math.max(0, scrollY);
-              el.style.setProperty('--py', `${(y * speed).toFixed(1)}px`);
-              el.style.setProperty('--po', Math.max(0, 1 - y / (vh * 0.75)).toFixed(3));
+              // Each element fades by ITS OWN position: fully visible until its top reaches the
+              // top of the screen, then drifts and fades as it leaves. (Fading by page scroll
+              // made the stacked mobile rainbow vanish while it was still on screen.)
+              const shift = Number(el.dataset.py || 0);
+              const r = el.getBoundingClientRect();
+              const top = r.top - shift;             // layout position without our own translate
+              const past = Math.max(0, -top);        // px of the element scrolled above the screen
+              const py = past * speed;
+              el.dataset.py = String(py);
+              el.style.setProperty('--py', `${py.toFixed(1)}px`);
+              el.style.setProperty('--po', Math.max(0, 1 - past / (r.height * 0.85)).toFixed(3));
             } else {
               const r = el.getBoundingClientRect();
               if (r.bottom < -200 || r.top > vh + 200) continue;
