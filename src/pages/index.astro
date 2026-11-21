@@ -300,16 +300,24 @@ const phone = primaryBranch.phones[0];
     });
   });
 
-  // Rainbow draws when it scrolls into view; resets once fully off screen so it draws again on return
+  // Rainbow draws the first time it comes into view, then stays drawn while scrolling.
+  // It only replays after the visitor has reached the very bottom of the page: at that
+  // point it resets (out of sight) and draws again the next time it comes into view.
   const art = document.querySelector<HTMLElement>('.hero-art');
+  const pageEnd = document.querySelector<HTMLElement>('footer > :last-child');
   if (art) {
+    let armed = true; // allowed to play on next view
     new IntersectionObserver(
       ([e]) => {
-        if (e.intersectionRatio >= 0.35) art.classList.add('play');
-        else if (!e.isIntersecting) art.classList.remove('play');
+        if (armed && e.intersectionRatio >= 0.35) { art.classList.add('play'); armed = false; }
       },
       { threshold: [0, 0.35] },
     ).observe(art);
+    if (pageEnd) {
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting && !armed) { art.classList.remove('play'); armed = true; }
+      }).observe(pageEnd);
+    }
   }
 
   // Event strip arrows
