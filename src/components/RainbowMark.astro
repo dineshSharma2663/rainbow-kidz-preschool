@@ -32,6 +32,7 @@ const uid = `arc-${Math.random().toString(36).slice(2, 8)}`;
   /* Draw-on-view: the arcs wait undrawn until an ancestor gets .play (added when the
      rainbow scrolls into view, removed when it fully leaves, so it redraws on return).
      Only when motion is allowed (html.motion); otherwise the rainbow is simply shown. */
+  .arc-label { font-family: var(--font-display); font-weight: 800; font-size: 6.4px; letter-spacing: .06em; fill: var(--color-ink); }
   :global(.motion) .arc-draw path[style] { stroke-dasharray: 1; stroke-dashoffset: 1; }
   :global(.motion) .arc-draw .arc-label { opacity: 0; }
   :global(.motion .play) .arc-draw path[style] {
