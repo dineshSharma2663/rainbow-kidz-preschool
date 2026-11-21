@@ -1,0 +1,62 @@
+---
+import { school, tone, telHref, waHref } from '../lib/data';
+
+/** Branch cards on one side, a live Google map on the other. Picking a card moves the map. */
+const embed = (q: string) => `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
+const branches = school.branches.map((b, i) => ({ ...b, tone: i ? 'blue' : 'violet', embed: embed(b.mapQuery ?? `Rainbow Kidz Pre School ${b.name} Gurugram`) }));
+---
+<div class="branch-map grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)]" data-branch-map>
+  <div class="grid gap-4 content-start" role="group" aria-label="Choose a branch">
+    {branches.map((b, i) => (
+      <article class="branch tone-soft-bg" style={tone(b.tone)} data-branch={i} aria-current={i === 0 ? 'true' : undefined}>
+        <button type="button" class="branch-pick" data-pick={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+          <span class="font-display font-bold text-2xl">{b.name}</span>
+          {b.googleRating && (
+            <span class="rating">★ {b.googleRating.rating.toFixed(1)} <span class="text-ink-soft font-normal">· {b.googleRating.reviews} Google reviews</span></span>
+          )}
+          <span class="block mt-2 text-ink-soft text-base">{b.address}</span>
+        </button>
+        <div class="mt-4 flex flex-wrap gap-2.5">
+          <a class="btn !text-base !py-2" style={tone(b.tone)} href={telHref(b.phones[0])}>Call</a>
+          <a class="btn !text-base !py-2" style="--tone:#16a34a;--tone-ink:#166534" href={waHref(b.phones[0], `Hello, I'd like to visit the ${b.name} branch.`)} target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn-quiet !text-base !py-2" href={b.mapUrl} target="_blank" rel="noopener">Directions</a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="map-frame">
+    <iframe
+      title={`Map: Rainbow Kidz ${branches[0].name}`}
+      src={branches[0].embed}
+      data-embeds={JSON.stringify(branches.map((b) => ({ src: b.embed, name: b.name })))}
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+</div>
+
+<style>
+  .branch { border-radius: 26px; padding: 1.5rem; box-shadow: inset 0 0 0 3px transparent; transition: box-shadow .2s ease; }
+  .branch[aria-current='true'] { box-shadow: inset 0 0 0 3px var(--tone); }
+  .branch-pick { display: block; width: 100%; text-align: left; cursor: pointer; }
+  .rating { display: block; margin-top: .2rem; font-weight: 600; color: #a16207; }
+  .map-frame { min-height: 22rem; border-radius: 28px; overflow: hidden; border: 6px solid #fff; box-shadow: 0 14px 30px -18px rgb(30 42 90 / .5); background: #e8edf5; }
+  .map-frame iframe { width: 100%; height: 100%; min-height: 22rem; border: 0; display: block; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-branch-map]').forEach((root) => {
+    const frame = root.querySelector<HTMLIFrameElement>('iframe')!;
+    const embeds: { src: string; name: string }[] = JSON.parse(frame.dataset.embeds!);
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-branch]')];
+    root.querySelectorAll<HTMLButtonElement>('[data-pick]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const i = Number(btn.dataset.pick);
+        cards.forEach((c, k) => {
+          k === i ? c.setAttribute('aria-current', 'true') : c.removeAttribute('aria-current');
+          c.querySelector('[data-pick]')!.setAttribute('aria-pressed', String(k === i));
+        });
+        if (frame.src !== embeds[i].src) { frame.src = embeds[i].src; frame.title = `Map: Rainbow Kidz ${embeds[i].name}`; }
+      }),
+    );
+  });
+</script>

@@ -1,29 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
-import { school, tone, telHref, waHref, mapHref } from '../lib/data';
+import BranchMap from '../components/BranchMap.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { school } from '../lib/data';
 ---
-<Base title="Contact" current="contact" description="Phone numbers, WhatsApp and directions for both Rainbow Kidz Pre School branches in Gurugram.">
-  <section class="wrap pt-8 pb-24">
+<Base title="Contact" current="contact" description="Addresses, phone numbers, WhatsApp and a map for both Rainbow Kidz Pre School branches in Gurugram.">
+  <section class="wrap pt-8 pb-16">
     <h1>Contact us</h1>
-    <p class="mt-5 measure text-xl text-ink-soft">Call or WhatsApp either branch. For anything else, email
+    <p class="mt-5 measure text-xl text-ink-soft">Call or WhatsApp either branch, or pick one to see it on the map. For anything else, email
       <a class="font-semibold underline underline-offset-4" href={`mailto:${school.school.email}`}>{school.school.email}</a>.</p>
-
-    <div class="mt-14 grid gap-6 md:grid-cols-2">
-      {school.branches.map((b, i) => (
-        <article class="rounded-[28px] p-8 md:p-10 tone-soft-bg" style={tone(i ? 'blue' : 'violet')}>
-          <h2 class="!text-3xl">{b.name}</h2>
-          <p class="mt-2 text-ink-soft">{b.address ?? 'Gurugram, Haryana. Call us for directions.'}</p>
-          <ul class="mt-6 space-y-3">
-            {b.phones.map((p) => (
-              <li class="flex flex-wrap items-center gap-3">
-                <a class="font-display font-bold text-2xl" href={telHref(p)}>{p}</a>
-                <a class="chip" style={tone('green')} href={waHref(p)} rel="noopener">WhatsApp</a>
-              </li>
-            ))}
-          </ul>
-          <a class="btn btn-quiet mt-8" href={b.mapUrl ?? mapHref(b.name)} rel="noopener">Open in Google Maps</a>
-        </article>
-      ))}
-    </div>
+    <div class="mt-12"><BranchMap /></div>
+  </section>
+  <section class="wrap pb-24">
+    <h2 class="!text-3xl">Find us online</h2>
+    <div class="mt-6"><SocialLinks /></div>
   </section>
 </Base>

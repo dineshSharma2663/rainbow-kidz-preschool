@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
-import RainbowMark from '../components/RainbowMark.astro';
-import { school, url, primaryBranch, telHref, waHref, toneOrder, hex } from '../lib/data';
+import { Image } from 'astro:assets';
+import SocialLinks from '../components/SocialLinks.astro';
+import { school, url, img, primaryBranch, telHref, waHref, toneOrder, hex } from '../lib/data';
+
+const logo = img(school.school.logo);
 
 interface Props { title?: string; description?: string; current?: 'home' | 'events' | 'admissions' | 'contact' }
 const { title, description, current = 'home' } = Astro.props;
@@ -31,7 +34,8 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
     <meta name="description" content={metaDescription} />
     {isDemo && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#ffffff" />
-    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <link rel="icon" type="image/png" href={url('favicon.png')} />
+    <link rel="apple-touch-icon" href={url('favicon.png')} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
@@ -43,7 +47,7 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
     <header class="relative z-20">
       <div class="wrap flex items-center justify-between gap-4 py-4">
         <a href={url()} class="flex items-center gap-2.5 rounded-lg" aria-label={`${name} home`}>
-          <RainbowMark size={46} stroke={4} />
+          <Image src={logo} alt="" width={52} height={52} densities={[1, 2]} loading="eager" class="w-[52px] h-[52px] rounded-full" />
           <span class="font-display font-extrabold text-[1.35rem] leading-none">
             Rainbow Kidz<span class="block text-sm font-semibold text-ink-soft tracking-normal">Pre School, Gurugram</span>
           </span>
@@ -68,14 +72,10 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
       </div>
       <div class="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
+          <Image src={logo} alt="Rainbow Kidz Pre School logo" width={84} height={84} densities={[1, 2]} class="w-[84px] h-[84px] rounded-full mb-4 ring-4 ring-white/15" />
           <p class="font-display font-extrabold text-3xl">Rainbow Kidz Pre School</p>
           <p class="mt-2 text-white/75 measure">{school.school.taglines[0]}</p>
-          <p class="mt-6 text-white/75">
-            <a class="underline underline-offset-4 hover:text-white" href={`mailto:${school.school.email}`}>{school.school.email}</a>
-          </p>
-          <p class="mt-1 text-white/75">
-            <a class="underline underline-offset-4 hover:text-white" href={school.school.instagram} rel="noopener">Instagram: @rainbowkidzpreschool</a>
-          </p>
+          <div class="mt-6"><SocialLinks variant="icons" /></div>
         </div>
         {school.branches.map((b) => (
           <div>
@@ -83,6 +83,7 @@ const waText = `Hello, I'd like to know about admissions at ${name}.`;
             <ul class="mt-2 space-y-1 text-white/75">
               {b.phones.map((p) => <li><a class="hover:text-white" href={telHref(p)}>{p}</a></li>)}
             </ul>
+            {b.address && <p class="mt-3 text-white/60 text-base leading-snug">{b.address}</p>}
           </div>
         ))}
       </div>

@@ -49,7 +49,8 @@
         "Mamta",
         "Neela"
       ]
-    }
+    },
+    "logo": "assets/brand/rainbow-kidz-logo.jpg"
   },
   "branches": [
     {
@@ -59,10 +60,16 @@
         "+91 98109 46354",
         "+91 98104 16354"
       ],
-      "address": null,
-      "mapUrl": null,
+      "address": "178-181, Choma, Block E, Palam Vihar Extension, Gurugram, Haryana 122017",
+      "mapUrl": "https://www.google.com/maps/place/Rainbow+kidz+pre+school/@28.5030211,77.0367916,17z",
       "instagram": "https://www.instagram.com/rainbowkidzpreschool/",
-      "verified": false
+      "verified": true,
+      "mapQuery": "Rainbow kidz pre school, 178-181 Choma, Block E, Palam Vihar Extension, Gurugram 122017",
+      "googleRating": {
+        "rating": 4.9,
+        "reviews": 60,
+        "checked": "2026-11-21"
+      }
     },
     {
       "id": "rajendra-park",
@@ -71,10 +78,16 @@
         "+91 97736 00435",
         "+91 99103 90515"
       ],
-      "address": null,
-      "mapUrl": null,
+      "address": "147, Gali Number 3, Rattan Vihar, Block B, Rajendra Park, Sector 105, Gurugram, Haryana 122006",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=RAINBOW+KIDZ+PRE+SCHOOL+RAJENDRA+PARK+Gurugram",
       "instagram": "https://www.instagram.com/rainbowkidzrajendra/",
-      "verified": false
+      "verified": true,
+      "mapQuery": "Rainbow Kidz Pre School Rajendra Park, 147 Gali Number 3, Rattan Vihar, Sector 105, Gurugram 122006",
+      "googleRating": {
+        "rating": 5.0,
+        "reviews": 56,
+        "checked": "2026-11-21"
+      }
     }
   ],
   "programs": [
@@ -647,5 +660,47 @@
     "Original high-resolution photos, videos and logo file",
     "Written consent for children's faces and testimonial quotes",
     "Whether to include @rainbowkidzrajendra content"
+  ],
+  "social": [
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "handle": "@rainbowkidzpreschool",
+      "url": "https://www.instagram.com/rainbowkidzpreschool/",
+      "color": "#E4405F"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "handle": "+91 98109 46354",
+      "url": "https://wa.me/919810946354",
+      "color": "#25D366"
+    },
+    {
+      "id": "googlemaps",
+      "label": "Google reviews",
+      "handle": "4.9 from 60 reviews",
+      "url": "https://www.google.com/maps/place/Rainbow+kidz+pre+school/@28.5030211,77.0367916,17z",
+      "color": "#4285F4"
+    },
+    {
+      "id": "gmail",
+      "label": "Email",
+      "handle": "kidzrainbow@gmail.com",
+      "url": "mailto:kidzrainbow@gmail.com",
+      "color": "#EA4335"
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "url": null,
+      "color": "#0866FF"
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "url": null,
+      "color": "#FF0000"
+    }
   ]
 }

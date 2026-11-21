@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import RainbowMark from '../components/RainbowMark.astro';
+import BranchMap from '../components/BranchMap.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import {
   school, url, tone, hex, toneOrder, eventsBySchoolYear, monthName,
   telHref, waHref, mapHref, primaryBranch,
@@ -46,7 +48,7 @@ const phone = primaryBranch.phones[0];
         13 units up, while the inner band at x=35..65 is ~16.5 units up.
       -->
       <div class="hero-art relative mx-auto w-full max-w-[34rem]" aria-label="Messages from our children">
-        <RainbowMark size={540} stroke={3.2} animate class="block w-full h-auto" />
+        <RainbowMark size={540} stroke={3.2} animate label="Rainbow Kidz Pre School" class="block w-full h-auto overflow-visible" />
         <div class="placards">
           {placards.map((p, i) => (
             <figure class:list={['pin placard aspect-[3/4]', i === 1 ? 'is-centre' : i === 0 ? 'is-side tilt-l' : 'is-side tilt-r']}
@@ -204,25 +206,21 @@ const phone = primaryBranch.phones[0];
     </div>
   </section>
 
-  <!-- VISIT: violet -->
+  <!-- VISIT: violet. Branch cards drive the live map -->
   <section class="band" style={tone('violet')} id="visit">
     <div class="wrap">
       <h2>Come and see us</h2>
-      <p class="mt-4 measure text-xl text-ink-soft">Two branches in Gurugram. Call or message either one to book a visit.</p>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {school.branches.map((b, i) => (
-          <article class="rounded-[28px] p-8 md:p-10 tone-soft-bg" style={tone(i ? 'blue' : 'violet')}>
-            <h3 class="!text-3xl">{b.name}</h3>
-            <ul class="mt-4 space-y-1 text-lg">
-              {b.phones.map((p) => <li><a class="font-semibold hover:underline" href={telHref(p)}>{p}</a></li>)}
-            </ul>
-            <div class="mt-7 flex flex-wrap gap-3">
-              <a class="btn" style={tone(i ? 'blue' : 'violet')} href={waHref(b.phones[0], `Hello, I'd like to visit the ${b.name} branch.`)} rel="noopener">WhatsApp</a>
-              <a class="btn btn-quiet" href={mapHref(b.name)} rel="noopener">Open in Maps</a>
-            </div>
-          </article>
-        ))}
-      </div>
+      <p class="mt-4 measure text-xl text-ink-soft">Two branches in Gurugram, both rated by parents on Google. Pick a branch to see it on the map.</p>
+      <div class="mt-10"><BranchMap /></div>
+    </div>
+  </section>
+
+  <!-- SOCIAL: four real channels -->
+  <section class="band tone-soft-bg" style={tone('indigo')} id="follow">
+    <div class="wrap">
+      <h2>Follow our days</h2>
+      <p class="mt-4 measure text-xl text-ink-soft">New photos and videos go up on Instagram almost every week. Message us on WhatsApp any time.</p>
+      <div class="mt-10"><SocialLinks /></div>
     </div>
   </section>
 </Base>
